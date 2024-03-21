@@ -3,7 +3,7 @@ package jik.inu.inugram.feature.sign
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +25,7 @@ fun EmailScreen(
     AnimatedVisibility(
         visible = visible,
         enter = fadeIn(tween(durationMillis = 1000)),
-        exit = slideOutHorizontally()
+        exit = fadeOut(tween(durationMillis = 400))
     ) {
         Column(
             modifier = modifier

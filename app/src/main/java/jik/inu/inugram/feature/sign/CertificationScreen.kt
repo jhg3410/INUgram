@@ -1,5 +1,6 @@
 package jik.inu.inugram.feature.sign
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -18,12 +19,17 @@ import jik.inu.inugram.designsystem.component.button.IGButton
 @Composable
 fun CertificationScreen(
     modifier: Modifier = Modifier,
-    visible: Boolean
+    visible: Boolean,
+    navigateToEmail: () -> Unit
 ) {
+    BackHandler {
+        navigateToEmail()
+    }
+
     AnimatedVisibility(
         visible = visible,
-        enter = slideInHorizontally(),
-        exit = slideOutHorizontally()
+        enter = slideInHorizontally { it },
+        exit = slideOutHorizontally { it }
     ) {
         Column(
             modifier = modifier
@@ -36,7 +42,7 @@ fun CertificationScreen(
             )
             Spacer(modifier = Modifier.height(44.dp))
 
-            // TextField(value = , onValueChange = )
+
 
             Spacer(modifier = Modifier.weight(1f))
             IGButton(
