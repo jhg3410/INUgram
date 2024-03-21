@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,9 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.delay
 
-enum class SignPage {
-    NONE, SIGN, EMAIL, CERTIFICATION
-}
 
 @Composable
 fun SignScreen(
@@ -47,11 +43,14 @@ fun SignScreen(
                 }
             }
 
-            SignPage.EMAIL -> EmailScreen()
-            SignPage.CERTIFICATION -> CertificationScreen()
             else -> Unit
         }
         SignContent(visible = visiblePage == SignPage.SIGN)
+        EmailScreen(
+            visible = visiblePage == SignPage.EMAIL,
+            navigateToCertification = { visiblePage = SignPage.CERTIFICATION }
+        )
+        CertificationScreen(visible = visiblePage == SignPage.CERTIFICATION)
     }
 }
 
@@ -70,6 +69,7 @@ fun SignContent(
         Box(contentAlignment = Alignment.Center) {
             Text(
                 text = "INUgram 을 사용하려면\n인천대 학생을 인증해야 해요",
+                color = Color.Black,
                 style = MaterialTheme.typography.titleLarge
             )
         }
