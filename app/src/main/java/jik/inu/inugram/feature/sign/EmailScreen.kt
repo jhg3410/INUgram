@@ -4,17 +4,26 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import jik.inu.inugram.designsystem.component.button.IGButton
+import jik.inu.inugram.designsystem.component.textfield.IGTextField
 
 @Composable
 fun EmailScreen(
@@ -22,6 +31,10 @@ fun EmailScreen(
     visible: Boolean,
     navigateToCertification: () -> Unit
 ) {
+
+    val focusManager = LocalFocusManager.current
+    var email by remember { mutableStateOf("") }
+
     AnimatedVisibility(
         visible = visible,
         enter = fadeIn(tween(durationMillis = 1000)),
@@ -29,6 +42,10 @@ fun EmailScreen(
     ) {
         Column(
             modifier = modifier
+                .imePadding()
+                .pointerInput(key1 = Unit) {
+                    detectTapGestures(onTap = { focusManager.clearFocus() })
+                }
         ) {
             Spacer(modifier = Modifier.height(44.dp))
             Text(
@@ -38,7 +55,13 @@ fun EmailScreen(
             )
             Spacer(modifier = Modifier.height(44.dp))
 
-            // TextField(value = , onValueChange = )
+            IGTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 18.dp),
+                value = email,
+                onValueChange = { input -> email = input }
+            )
 
             Spacer(modifier = Modifier.weight(1f))
             IGButton(
