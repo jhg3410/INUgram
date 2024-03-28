@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,7 +41,6 @@ fun EmailScreen(
     ) {
         Column(
             modifier = modifier
-                .imePadding()
                 .pointerInput(key1 = Unit) {
                     detectTapGestures(onTap = { focusManager.clearFocus() })
                 }
@@ -54,7 +52,6 @@ fun EmailScreen(
                 style = MaterialTheme.typography.titleLarge,
             )
             Spacer(modifier = Modifier.height(44.dp))
-
             IGTextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -62,7 +59,6 @@ fun EmailScreen(
                 value = email,
                 onValueChange = { input -> email = input }
             )
-
             Spacer(modifier = Modifier.weight(1f))
             IGButton(
                 modifier = Modifier.fillMaxWidth(),

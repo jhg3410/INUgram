@@ -50,10 +50,12 @@ fun SignScreen(
             visible = visiblePage == SignPage.EMAIL,
             navigateToCertification = { visiblePage = SignPage.CERTIFICATION }
         )
-        CertificationScreen(
-            visible = visiblePage == SignPage.CERTIFICATION,
-            navigateToEmail = { visiblePage = SignPage.EMAIL }
-        )
+        if (visiblePage == SignPage.CERTIFICATION) {
+            CertificationScreen(
+                visible = visiblePage == SignPage.CERTIFICATION,
+                navigateToEmail = { visiblePage = SignPage.EMAIL }
+            )
+        }
     }
 }
 
