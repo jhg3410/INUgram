@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "INUgram"
 include(":app")
- 
+include(":data")
