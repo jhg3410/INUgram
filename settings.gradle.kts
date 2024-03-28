@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "INUgram"
 include(":app")
 include(":data")
+include(":lib:videoplayer")
