@@ -27,6 +27,7 @@ import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults.divi
 import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults.dividerDefaultColor
 import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults.textActiveColor
 import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults.textDefaultColor
+import jik.inu.inugram.designsystem.component.textfield.visualtransformation.EmailVisualTransformation
 import jik.inu.inugram.util.toPx
 
 @Composable
@@ -48,7 +49,7 @@ fun IGTextField(
         },
         value = value,
         onValueChange = onValueChange,
-//        visualTransformation = EmailVisualTransformation(),
+        visualTransformation = EmailVisualTransformation(),
         singleLine = true,
         decorationBox = { innerTextField ->
             IGTextFieldContainer(

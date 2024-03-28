@@ -4,9 +4,15 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
+import jik.inu.inugram.util.Empty
 
 class EmailVisualTransformation : VisualTransformation {
-    private fun String.toINUEmail() = "$this@inu.ac.kr"
+
+    private companion object {
+        const val INU_EMAIL_DOMAIN = "@inu.ac.kr"
+    }
+
+    private fun String.toINUEmail() = "$this$INU_EMAIL_DOMAIN"
 
     override fun filter(text: AnnotatedString): TransformedText {
         val origin = text.text
@@ -14,16 +20,17 @@ class EmailVisualTransformation : VisualTransformation {
 
         val offsetMapping = object : OffsetMapping {
             override fun originalToTransformed(offset: Int): Int {
-                TODO("Not yet implemented")
+                return offset
             }
 
             override fun transformedToOriginal(offset: Int): Int {
-                TODO("Not yet implemented")
+                if (offset > origin.length) return origin.length
+                return offset
             }
         }
 
         return TransformedText(
-            text = AnnotatedString(out),
+            text = AnnotatedString(if (origin.isEmpty()) String.Empty else out),
             offsetMapping = offsetMapping
         )
     }
