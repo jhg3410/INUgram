@@ -1,10 +1,11 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
-    namespace = "jik.inu.inugram.feature.certification"
+    namespace = "jik.inu.feature.certification"
     compileSdk = 34
 
     defaultConfig {
@@ -24,20 +25,50 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
 }
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.runtime.ktx)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.navigation)
+
+    // compose
+    implementation(libs.compose.ui)
+    implementation(libs.compose.preview)
+    implementation(libs.compose.material3)
+
+    // lifecycle
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.runtime)
+
+    // hilt
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation)
+    kapt(libs.hilt.compiler)
+
+    // test
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+    // android test
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso)
+    androidTestImplementation(libs.compose.test.junit)
+
+    // debug
+    debugImplementation(libs.compose.tooling)
+    debugImplementation(libs.compose.test.manifest)
 }
