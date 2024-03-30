@@ -17,6 +17,7 @@ object CertificationNavigation {
     const val route = "Certification"
 
     fun NavGraphBuilder.installCertificationScreen(
+        navigateToHome: () -> Unit,
         navigateUp: () -> Unit
     ) {
         composable(
@@ -25,6 +26,7 @@ object CertificationNavigation {
             exitTransition = { slideOutHorizontally { it } }
         ) {
             CertificationScreen(
+                navigateToHome = navigateToHome,
                 navigateUp = navigateUp
             )
         }

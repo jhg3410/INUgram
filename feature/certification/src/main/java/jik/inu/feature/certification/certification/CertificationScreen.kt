@@ -39,6 +39,7 @@ import jik.inu.core.designsystem.component.button.IGButton
 @Composable
 fun CertificationScreen(
     modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit,
     navigateUp: () -> Unit
 ) {
 
@@ -83,7 +84,7 @@ fun CertificationScreen(
         IGButton(
             modifier = Modifier.fillMaxWidth(),
             text = "인증하기",
-            onClick = {},
+            onClick = navigateToHome,
             enable = inputNumber.length == 5
         )
     }

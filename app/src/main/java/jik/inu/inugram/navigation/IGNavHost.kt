@@ -8,6 +8,9 @@ import jik.inu.feature.certification.navigation.GreetingNavigation
 import jik.inu.feature.certification.navigation.GreetingNavigation.installCertificationNavGraph
 import jik.inu.feature.certification.navigation.navigateCertification
 import jik.inu.feature.certification.navigation.navigateEmail
+import jik.inu.feature.home.navigation.HomeNavigation.installHomeNavGraph
+import jik.inu.feature.home.navigation.navigateHome
+
 
 @Composable
 fun IGNavHost(
@@ -23,7 +26,10 @@ fun IGNavHost(
         installCertificationNavGraph(
             navigateToEmail = navController::navigateEmail,
             navigateToCertification = navController::navigateCertification,
+            navigateToHome = navController::navigateHome,
             navigateUp = navController::navigateUp
         )
+
+        installHomeNavGraph()
     }
 }

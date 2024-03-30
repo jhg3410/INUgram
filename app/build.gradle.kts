@@ -55,6 +55,7 @@ dependencies {
     // modules
     implementation(projects.core.designsystem)
     implementation(projects.feature.certification)
+    implementation(projects.feature.home)
 
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.runtime.ktx)
