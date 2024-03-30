@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jik.inu.inugram.designsystem.theme.Blue50
-import jik.inu.inugram.designsystem.theme.SpoqaHanSansNeo
+import jik.inu.core.theme.SpoqaHanSansNeo
 
 @Composable
 fun IGButton(

@@ -20,7 +20,7 @@ object CertificationNavigation {
         navigateUp: () -> Unit
     ) {
         composable(
-            route = GreetingNavigation.route,
+            route = CertificationNavigation.route,
             enterTransition = { slideInHorizontally { it } },
             exitTransition = { slideOutHorizontally { it } }
         ) {

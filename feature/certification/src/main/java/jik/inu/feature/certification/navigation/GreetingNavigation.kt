@@ -1,5 +1,7 @@
 package jik.inu.feature.certification.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import jik.inu.feature.certification.greeting.GreetingScreen
@@ -13,7 +15,8 @@ object GreetingNavigation {
         navigateToEmail: () -> Unit
     ) {
         composable(
-            route = GreetingNavigation.route
+            route = GreetingNavigation.route,
+            exitTransition = { fadeOut(animationSpec = tween(durationMillis = 1000)) }
         ) {
             GreetingScreen(
                 navigateToEmail = navigateToEmail

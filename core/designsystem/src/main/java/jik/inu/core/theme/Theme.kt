@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import jik.inu.core.theme.Typography
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
