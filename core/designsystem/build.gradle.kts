@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
-    namespace = "jik.inu.feature.certification"
+    namespace = "jik.inu.core.designsystem"
     compileSdk = 34
 
     defaultConfig {
@@ -31,36 +30,22 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
 }
 
 dependencies {
+
     // modules
-    implementation(projects.core.designsystem)
+    implementation(projects.core.ui)
 
     implementation(libs.androidx.ktx)
-    implementation(libs.androidx.runtime.ktx)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.navigation)
 
     // compose
     implementation(libs.compose.ui)
-    implementation(libs.compose.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons)
 
     // lifecycle
-    implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.runtime)
-
-    // hilt
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation)
-    kapt(libs.hilt.compiler)
 
     // test
     testImplementation(libs.junit)
@@ -69,8 +54,4 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso)
     androidTestImplementation(libs.compose.test.junit)
-
-    // debug
-    debugImplementation(libs.compose.tooling)
-    debugImplementation(libs.compose.test.manifest)
 }

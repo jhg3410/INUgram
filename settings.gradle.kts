@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
@@ -24,3 +26,5 @@ include(":app")
 include(":data")
 include(":lib:videoplayer")
 include(":feature:certification")
+include(":core:designsystem")
+include(":core:ui")

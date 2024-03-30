@@ -25,6 +25,8 @@ splashscreen = "1.0.1"
 media3 = "1.3.0"
 
 androidGradlePlugin = "8.1.4"
+appcompat = "1.6.1"
+material = "1.11.0"
 
 [libraries]
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
@@ -90,6 +92,8 @@ splashscreen = { group = "androidx.core", name = "core-splashscreen", version.re
 # Media3
 media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
 media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
