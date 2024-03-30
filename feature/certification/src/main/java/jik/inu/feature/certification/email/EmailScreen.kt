@@ -52,7 +52,7 @@ fun EmailScreen(
         Spacer(modifier = Modifier.weight(1f))
         IGButton(
             modifier = Modifier.fillMaxWidth(),
-            enable = false,
+            enable = email.isNotEmpty(),
             text = "보내기",
             onClick = navigateToCertification
         )

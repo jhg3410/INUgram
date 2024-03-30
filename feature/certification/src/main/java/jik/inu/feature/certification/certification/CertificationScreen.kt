@@ -83,7 +83,8 @@ fun CertificationScreen(
         IGButton(
             modifier = Modifier.fillMaxWidth(),
             text = "인증하기",
-            onClick = {}
+            onClick = {},
+            enable = inputNumber.length == 5
         )
     }
 }
