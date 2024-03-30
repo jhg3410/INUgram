@@ -33,7 +33,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import jik.inu.inugram.designsystem.component.button.IGButton
+import jik.inu.core.designsystem.component.button.IGButton
 
 
 @Composable

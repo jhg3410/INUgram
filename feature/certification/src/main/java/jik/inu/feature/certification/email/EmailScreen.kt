@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
-import jik.inu.inugram.designsystem.component.button.IGButton
+import jik.inu.core.designsystem.component.button.IGButton
 import jik.inu.core.designsystem.component.textfield.IGTextField
 
 @Composable
@@ -52,6 +52,7 @@ fun EmailScreen(
         Spacer(modifier = Modifier.weight(1f))
         IGButton(
             modifier = Modifier.fillMaxWidth(),
+            enable = false,
             text = "보내기",
             onClick = navigateToCertification
         )

@@ -1,4 +1,4 @@
-package jik.inu.inugram.designsystem.component.button
+package jik.inu.core.designsystem.component.button
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,20 +12,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import jik.inu.inugram.designsystem.theme.Blue50
 import jik.inu.core.theme.SpoqaHanSansNeo
+import jik.inu.inugram.designsystem.theme.Blue50
 
 @Composable
 fun IGButton(
     modifier: Modifier = Modifier,
+    enable: Boolean = true,
     text: String,
     onClick: () -> Unit
 ) {
 
     Box(
         modifier = modifier
-            .clickable(onClick = onClick)
-            .background(color = Blue50),
+            .clickable(onClick = onClick, enabled = enable)
+            .background(color = if (enable) Blue50 else Color(0xFFAAAAAA)),
         contentAlignment = Alignment.Center
     ) {
         Text(
