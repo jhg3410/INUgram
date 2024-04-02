@@ -12,8 +12,11 @@ import androidx.navigation.navArgument
 import jik.inu.feature.certification.certification.CertificationScreen
 
 
-fun NavController.navigateCertification(navOptions: NavOptions? = null) {
-    navigate(CertificationNavigation.routeWithArgs, navOptions)
+fun NavController.navigateCertification(
+    certificationNumber: String,
+    navOptions: NavOptions? = null
+) {
+    navigate("${CertificationNavigation.route}/$certificationNumber", navOptions)
 }
 
 object CertificationNavigation {

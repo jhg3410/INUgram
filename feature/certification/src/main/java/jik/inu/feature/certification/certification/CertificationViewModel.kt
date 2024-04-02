@@ -27,7 +27,7 @@ class CertificationViewModel @Inject constructor(
         } else {
             viewModelScope.launch {
                 launch {
-                    certificationRepository.getAccessToken()
+//                    certificationRepository.getAccessToken()
                 }.join()
                 action()
             }

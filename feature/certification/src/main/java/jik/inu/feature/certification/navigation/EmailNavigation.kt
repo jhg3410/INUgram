@@ -17,16 +17,14 @@ object EmailNavigation {
     const val route = "email"
 
     fun NavGraphBuilder.installEmailScreen(
-        navigateToCertification: () -> Unit
+        navigateToCertification: (certificationNumber: String) -> Unit
     ) {
         composable(
             route = EmailNavigation.route,
             enterTransition = { fadeIn(tween(durationMillis = 1000)) },
             exitTransition = { fadeOut(tween(durationMillis = 400)) }
         ) {
-            EmailScreen(
-                navigateToCertification = navigateToCertification
-            )
+            EmailScreen(navigateToCertification = navigateToCertification)
         }
     }
 }

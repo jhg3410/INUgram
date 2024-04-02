@@ -25,7 +25,7 @@ fun IGNavHost(
     ) {
         installCertificationNavGraph(
             navigateToEmail = navController::navigateEmail,
-            navigateToCertification = navController::navigateCertification,
+            navigateToCertification = { navController.navigateCertification(it) },
             navigateToHome = navController::navigateHome,
             navigateUp = navController::navigateUp
         )
