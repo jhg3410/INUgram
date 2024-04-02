@@ -1,4 +1,4 @@
-package jik.inu.inugram.designsystem.component.textfield
+package jik.inu.core.designsystem.component.textfield
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -8,7 +8,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntOffset
-import jik.inu.inugram.designsystem.theme.Blue50
+import jik.inu.core.theme.Blue50
 
 
 internal object IGTextFieldDefaults {

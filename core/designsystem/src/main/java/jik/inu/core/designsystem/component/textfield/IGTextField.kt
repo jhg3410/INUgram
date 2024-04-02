@@ -25,11 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jik.inu.core.designsystem.component.textfield.visualtransformation.EmailVisualTransformation
 import jik.inu.core.ui.toPx
-import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults
-import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults.dividerActiveColor
-import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults.dividerDefaultColor
-import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults.textActiveColor
-import jik.inu.inugram.designsystem.component.textfield.IGTextFieldDefaults.textDefaultColor
+import jik.inu.core.designsystem.component.textfield.IGTextFieldDefaults.dividerActiveColor
+import jik.inu.core.designsystem.component.textfield.IGTextFieldDefaults.dividerDefaultColor
+import jik.inu.core.designsystem.component.textfield.IGTextFieldDefaults.textActiveColor
+import jik.inu.core.designsystem.component.textfield.IGTextFieldDefaults.textDefaultColor
 import jik.inu.inugram.designsystem.component.textfield.IGTextFieldType
 
 @Composable
