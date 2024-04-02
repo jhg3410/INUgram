@@ -1,7 +1,8 @@
 package jik.inu.feature.certification.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -38,7 +39,7 @@ object CertificationNavigation {
             route = routeWithArgs,
             arguments = arguments,
             enterTransition = { slideInHorizontally { it } },
-            exitTransition = { slideOutHorizontally { it } }
+            exitTransition = { fadeOut(tween(durationMillis = 400)) }
         ) {
             CertificationScreen(
                 navigateToHome = navigateToHome,
