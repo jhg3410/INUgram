@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -25,6 +26,9 @@ android {
             )
         }
     }
+    buildFeatures {
+        buildConfig = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -37,6 +41,17 @@ android {
 dependencies {
 
     implementation(libs.androidx.ktx)
+
+    // moshi
+    implementation(libs.moshi)
+    ksp(libs.moshi.codegen)
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
+
+    // logging
+    implementation(libs.logging.interceptor)
 
     // hilt
     implementation(libs.hilt.android)

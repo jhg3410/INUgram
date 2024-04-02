@@ -8,9 +8,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
-import jik.inu.inugram.designsystem.theme.INUgramTheme
+import dagger.hilt.android.AndroidEntryPoint
+import jik.inu.core.theme.INUgramTheme
 import jik.inu.inugram.navigation.IGNavHost
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
