@@ -90,6 +90,7 @@ fun CertificationScreen(
             modifier = Modifier.fillMaxWidth(),
             text = "인증하기",
             onClick = {
+                focusManager.clearFocus()
                 viewModel.certify(action = navigateToHome)
             },
             enable = inputNumber.length == 5
