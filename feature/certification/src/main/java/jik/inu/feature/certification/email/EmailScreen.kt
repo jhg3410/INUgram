@@ -1,33 +1,61 @@
 package jik.inu.feature.certification.email
 
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import jik.inu.core.designsystem.component.LoadingWheel
 import jik.inu.core.designsystem.component.button.IGButton
 import jik.inu.core.designsystem.component.textfield.IGTextField
 
 @Composable
 fun EmailScreen(
     modifier: Modifier = Modifier,
+    viewModel: EmailViewModel = hiltViewModel(),
     navigateToCertification: () -> Unit
 ) {
 
+    val email by viewModel.inputEmail.collectAsStateWithLifecycle()
+    val certificationNumber by viewModel.certificationNumber.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+
     val focusManager = LocalFocusManager.current
-    var email by remember { mutableStateOf("") }
+
+
+    LaunchedEffect(key1 = certificationNumber) {
+        if (certificationNumber.isNotEmpty()) {
+            viewModel.changeCertificationNumber(number = "")
+            navigateToCertification()
+        }
+    }
+
+    if (isLoading) {
+        Box(
+            modifier = modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            LoadingWheel(
+                modifier = modifier,
+            )
+        }
+
+    }
 
     Column(
         modifier = modifier
@@ -47,14 +75,16 @@ fun EmailScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 18.dp),
             value = email,
-            onValueChange = { input -> email = input }
+            onValueChange = { input -> viewModel.changeEmail(input) }
         )
         Spacer(modifier = Modifier.weight(1f))
         IGButton(
             modifier = Modifier.fillMaxWidth(),
             enable = email.isNotEmpty(),
             text = "보내기",
-            onClick = navigateToCertification
+            onClick = {
+                viewModel.sendEmail(email)
+            }
         )
     }
 }

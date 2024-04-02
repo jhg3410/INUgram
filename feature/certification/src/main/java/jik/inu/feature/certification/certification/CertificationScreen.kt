@@ -19,9 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,22 +31,35 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.button.IGButton
 
 
 @Composable
 fun CertificationScreen(
     modifier: Modifier = Modifier,
+    viewModel: CertificationViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
     navigateUp: () -> Unit
 ) {
 
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
-    var inputNumber by remember { mutableStateOf("") }
+    val inputNumber by viewModel.inputNumber.collectAsStateWithLifecycle()
+    val showDialog by viewModel.showDialog.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
+    }
+
+    if (showDialog) {
+        ErrorDialog(
+            message = "인증 번호가 일치하지 않습니다",
+            onConfirm = {
+                viewModel.changeVisibleDialog(visible = false)
+            }
+        )
     }
 
     Column(
@@ -71,20 +82,16 @@ fun CertificationScreen(
                 .focusRequester(focusRequester),
             value = inputNumber,
             onValueChange = { input ->
-                inputNumber = input.run {
-                    if (this.isEmpty() || this.toIntOrNull() != null && this.length <= 5) {
-                        this
-                    } else {
-                        inputNumber
-                    }
-                }
+                viewModel.changeInputNumber(input = input)
             }
         )
         Spacer(modifier = Modifier.weight(1f))
         IGButton(
             modifier = Modifier.fillMaxWidth(),
             text = "인증하기",
-            onClick = navigateToHome,
+            onClick = {
+                viewModel.certify(action = navigateToHome)
+            },
             enable = inputNumber.length == 5
         )
     }
