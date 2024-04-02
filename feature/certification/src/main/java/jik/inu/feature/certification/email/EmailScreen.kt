@@ -80,7 +80,7 @@ fun EmailScreen(
         Spacer(modifier = Modifier.weight(1f))
         IGButton(
             modifier = Modifier.fillMaxWidth(),
-            enable = email.isNotEmpty(),
+            enable = email.isNotEmpty() && isLoading.not(),
             text = "보내기",
             onClick = {
                 viewModel.sendEmail(email)
