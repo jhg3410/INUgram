@@ -1,4 +1,4 @@
-package jik.inu.core.theme
+package jik.inu.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import jik.inu.core.theme.INUgramTheme
+import jik.inu.core.designsystem.theme.INUgramTheme
 import jik.inu.inugram.navigation.IGNavHost
 
 @AndroidEntryPoint

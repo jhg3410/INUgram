@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import jik.inu.core.theme.SpoqaHanSansNeo
-import jik.inu.core.theme.Blue50
+import jik.inu.core.designsystem.theme.SpoqaHanSansNeo
+import jik.inu.core.designsystem.theme.Blue50
 
 @Composable
 fun IGButton(

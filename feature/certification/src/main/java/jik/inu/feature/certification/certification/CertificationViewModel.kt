@@ -18,11 +18,11 @@ class CertificationViewModel @Inject constructor(
 
     private val certificationNumber = CertificationArgs(savedStateHandle).certificationNumber
     val inputNumber = MutableStateFlow("")
-    var showDialog = MutableStateFlow(false)
+    var visibleToast = MutableStateFlow(false)
 
     fun certify(action: () -> Unit) {
         if (inputNumber.value != certificationNumber) {
-            changeVisibleDialog(visible = true)
+            visibleToast.value = true
             return
         } else {
             viewModelScope.launch {
@@ -42,7 +42,7 @@ class CertificationViewModel @Inject constructor(
         }
     }
 
-    fun changeVisibleDialog(visible: Boolean) {
-        showDialog.value = visible
+    fun closeToast() {
+        visibleToast.value = false
     }
 }

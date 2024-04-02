@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.button.IGButton
+import jik.inu.core.designsystem.component.toast.IGToast
+import jik.inu.core.designsystem.component.toast.ToastType
 
 
 @Composable
@@ -47,20 +49,20 @@ fun CertificationScreen(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val inputNumber by viewModel.inputNumber.collectAsStateWithLifecycle()
-    val showDialog by viewModel.showDialog.collectAsStateWithLifecycle()
+    val visibleToast by viewModel.visibleToast.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
     }
 
-    if (showDialog) {
-        ErrorDialog(
-            message = "인증 번호가 일치하지 않습니다",
-            onConfirm = {
-                viewModel.changeVisibleDialog(visible = false)
-            }
-        )
-    }
+
+    IGToast.Show(
+        message = "인증번호를 다시 확인해 주세요",
+        type = ToastType.WARNING,
+        visible = visibleToast,
+        onDismiss = { viewModel.closeToast() }
+    )
+
 
     Column(
         modifier = modifier

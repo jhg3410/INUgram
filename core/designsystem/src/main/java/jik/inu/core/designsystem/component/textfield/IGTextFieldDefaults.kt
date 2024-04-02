@@ -8,7 +8,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntOffset
-import jik.inu.core.theme.Blue50
+import jik.inu.core.designsystem.theme.Blue50
 
 
 internal object IGTextFieldDefaults {
