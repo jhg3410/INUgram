@@ -15,7 +15,7 @@ fun NavController.navigateHome(navOptions: NavOptions? = null) {
 object HomeNavigation {
     const val route = "Home"
 
-    fun NavGraphBuilder.installHomeScreen() {
+    private fun NavGraphBuilder.installHomeScreen() {
         composable(
             route = HomeNavigation.route,
             enterTransition = { slideInHorizontally { it } },
