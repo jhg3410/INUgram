@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons)
+    implementation(libs.compose.preview)
 
     // lifecycle
     implementation(libs.lifecycle.runtime)
@@ -60,4 +61,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso)
     androidTestImplementation(libs.compose.test.junit)
+
+    // debug
+    debugImplementation(libs.compose.tooling)
 }

@@ -111,7 +111,7 @@ fun IGToast(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = IGIcons.error,
+                    imageVector = IGIcons.Error,
                     contentDescription = "warning",
                     tint = Color(0xFFFFA800)
                 )
