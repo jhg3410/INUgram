@@ -9,6 +9,7 @@ import jik.inu.feature.certification.navigation.navigateCertification
 import jik.inu.feature.certification.navigation.navigateEmail
 import jik.inu.feature.home.navigation.HomeNavigation
 import jik.inu.feature.home.navigation.HomeNavigation.installHomeNavGraph
+import jik.inu.feature.home.navigation.UploadNavigation.installUploadScreen
 import jik.inu.feature.home.navigation.navigateHome
 import jik.inu.feature.mypage.navigation.MyPageNavigation.installMyPageNavGraph
 
@@ -32,6 +33,8 @@ fun IGNavHost(
         )
 
         installHomeNavGraph()
+
+        installUploadScreen()
 
         installMyPageNavGraph()
     }

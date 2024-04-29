@@ -40,9 +40,10 @@ android {
 }
 
 dependencies {
-// modules
+    // modules
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
+    implementation(projects.lib.videoplayer)
 
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.runtime.ktx)
