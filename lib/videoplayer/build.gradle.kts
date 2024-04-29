@@ -31,6 +31,13 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
@@ -52,4 +59,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso)
     androidTestImplementation(libs.compose.test.junit)
+
+    // exoplayer
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.ui)
 }
