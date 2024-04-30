@@ -12,19 +12,26 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AddCircle
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import jik.inu.core.designsystem.icon.IGIcons
 import jik.inu.core.designsystem.theme.SpoqaHanSansNeo
 import kotlinx.coroutines.delay
 
@@ -56,10 +63,27 @@ object IGToast {
 }
 
 
-enum class ToastType {
-    WARNING,
-    // todo: ERROR,
-    // todo: SUCCESS
+enum class ToastType(
+    val icon: ImageVector,
+    val iconColor: Color,
+    val strokeColor: Color,
+    val contentDescription: String = this.toString()
+) {
+    SUCCESS(
+        icon = Icons.Rounded.CheckCircle,
+        iconColor = Color(0xFF00B800),
+        strokeColor = Color(0xFF78D361),
+    ),
+    ERROR(
+        icon = Icons.Rounded.AddCircle,
+        iconColor = Color(0xFFFF0000),
+        strokeColor = Color(0xFFFF8181),
+    ),
+    WARNING(
+        icon = Icons.Rounded.Error,
+        iconColor = Color(0xFFFFA800),
+        strokeColor = Color(0xFFFFC581),
+    )
 }
 
 
@@ -99,7 +123,7 @@ fun IGToast(
                     )
                     .border(
                         width = 1.5.dp,
-                        color = Color(0xFFFFC581),
+                        color = type.strokeColor,
                         shape = RoundedCornerShape(100.dp)
                     )
                     .padding(
@@ -111,9 +135,12 @@ fun IGToast(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = IGIcons.Error,
-                    contentDescription = "warning",
-                    tint = Color(0xFFFFA800)
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(if (type == ToastType.ERROR) 45f else 0f),
+                    imageVector = type.icon,
+                    contentDescription = type.contentDescription,
+                    tint = type.iconColor
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
@@ -126,4 +153,16 @@ fun IGToast(
             }
         }
     }
+}
+
+
+@Preview
+@Composable
+fun PreviewIGToast() {
+    IGToast(
+        modifier = Modifier,
+        type = ToastType.SUCCESS,
+        message = "토스트 메시지",
+        visible = true
+    )
 }
