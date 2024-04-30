@@ -16,8 +16,7 @@ import javax.inject.Singleton
 class NetworkModule {
 
     private val baseUrl =
-        "http://inugram-env.eba-g8xxbjxq.ap-northeast-2.elasticbeanstalk.com/"
-
+        "http://inugram-env-1.eba-qtg2ppft.ap-northeast-2.elasticbeanstalk.com/"
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient =
