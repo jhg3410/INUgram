@@ -3,7 +3,7 @@ package jik.inu.feature.certification.email
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jik.inu.data.repository.certification.CertificationRepository
+import jik.inu.data.repository.certification.certification.CertificationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

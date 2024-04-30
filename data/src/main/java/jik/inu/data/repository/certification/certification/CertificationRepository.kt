@@ -1,4 +1,4 @@
-package jik.inu.data.repository.certification
+package jik.inu.data.repository.certification.certification
 
 interface CertificationRepository {
 

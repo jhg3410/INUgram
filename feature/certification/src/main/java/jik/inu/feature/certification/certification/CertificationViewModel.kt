@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jik.inu.data.repository.certification.CertificationRepository
+import jik.inu.data.repository.certification.certification.CertificationRepository
 import jik.inu.feature.certification.navigation.CertificationArgs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package jik.inu.data.repository.certification
+package jik.inu.data.repository.certification.certification
 
 import jik.inu.data.network.request.EmailRequest
 import jik.inu.data.network.service.CertificationService
