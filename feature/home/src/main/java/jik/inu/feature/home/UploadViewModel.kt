@@ -10,7 +10,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UploadViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+
 ) : ViewModel() {
 
     val contentUri = UploadArgs(savedStateHandle).contentUri
