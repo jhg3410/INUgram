@@ -60,7 +60,7 @@ fun CertificationScreen(
         message = "인증번호를 다시 확인해 주세요",
         type = ToastType.WARNING,
         visible = visibleToast,
-        onDismiss = { viewModel.closeToast() }
+        onDismiss = viewModel::closeToast
     )
 
 

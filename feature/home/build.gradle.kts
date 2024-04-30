@@ -41,6 +41,7 @@ android {
 
 dependencies {
     // modules
+    implementation(projects.data)
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
     implementation(projects.lib.videoplayer)

@@ -42,6 +42,7 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.R
+import jik.inu.core.designsystem.component.toast.IGToast
 import jik.inu.feature.home.UploadButtonDefaults.ButtonStrokeBrush
 import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 
@@ -52,6 +53,10 @@ fun UploadScreen(
 ) {
     val textInput by viewModel.inputDescription.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
+
+    val visibleToast by viewModel.visibleToast.collectAsStateWithLifecycle()
+    val toastType by viewModel.toastType.collectAsStateWithLifecycle()
+    val toastMessage by viewModel.toastMessage.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -82,6 +87,13 @@ fun UploadScreen(
             viewModel.upload()
         }
     }
+
+    IGToast.Show(
+        message = toastMessage,
+        type = toastType,
+        visible = visibleToast,
+        onDismiss = viewModel::closeToast
+    )
 }
 
 @Composable
