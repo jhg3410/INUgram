@@ -1,5 +1,7 @@
 package jik.inu.feature.home.navigation
 
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -28,7 +30,9 @@ object UploadNavigation {
     fun NavGraphBuilder.installUploadScreen() {
         composable(
             route = routeWithArgs,
-            arguments = arguments
+            arguments = arguments,
+            enterTransition = { slideInVertically { it } },
+            exitTransition = { slideOutVertically { it } }
         ) {
             UploadScreen()
         }
