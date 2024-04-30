@@ -89,7 +89,6 @@ fun SimpleVideoPlayer(
             }
         )
         SimpleVideoPlayerController(
-            modifier = Modifier,
             visible = controllerVisible,
             playerState = playerState,
         )

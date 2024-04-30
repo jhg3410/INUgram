@@ -4,8 +4,10 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -47,12 +51,17 @@ fun UploadScreen(
     viewModel: UploadViewModel = hiltViewModel()
 ) {
     val textInput by viewModel.inputDescription.collectAsStateWithLifecycle()
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
+            .pointerInput(key1 = Unit) {
+                detectTapGestures(onTap = { focusManager.clearFocus() })
+            }
             .background(color = Color.White)
             .padding(horizontal = 30.dp),
+        verticalArrangement = Arrangement.Center
     ) {
         SimpleVideoPlayer(
             modifier = Modifier
@@ -135,6 +144,13 @@ private fun UploadTextField(
                     )
                     .padding(8.dp)
             ) {
+                if (value.text.isEmpty()) {
+                    Text(
+                        text = "설명을 입력해주세요",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFFB0B0B0)
+                    )
+                }
                 innerTextField()
             }
         }
