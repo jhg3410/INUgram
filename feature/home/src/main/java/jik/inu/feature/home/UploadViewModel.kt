@@ -1,6 +1,7 @@
 package jik.inu.feature.home
 
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.core.net.toUri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +19,7 @@ class UploadViewModel @Inject constructor(
     private val videoRepository: VideoRepository
 ) : ViewModel() {
 
-    val contentUri = UploadArgs(savedStateHandle).contentUri
+    val contentUri = UploadArgs(savedStateHandle).contentUri.toUri()
     val inputDescription = MutableStateFlow(TextFieldValue())
 
     val visibleToast = MutableStateFlow(false)
@@ -27,7 +28,7 @@ class UploadViewModel @Inject constructor(
 
     fun upload() {
         viewModelScope.launch {
-            videoRepository.upload()
+            videoRepository.upload(contentUri = contentUri)
                 .onSuccess {
                     toastType.value = ToastType.SUCCESS
                     toastMessage.value = "정상적으로 업로드 되었어요"

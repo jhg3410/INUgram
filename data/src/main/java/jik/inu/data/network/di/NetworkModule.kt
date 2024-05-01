@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import jik.inu.data.network.interceptor.provideLoggingInterceptor
 import jik.inu.data.network.service.CertificationService
+import jik.inu.data.network.service.VideoService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -26,7 +27,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient) =
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(baseUrl)
@@ -38,4 +39,9 @@ class NetworkModule {
     @Singleton
     fun provideCertificationService(retrofit: Retrofit): CertificationService =
         retrofit.create(CertificationService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideVideoService(retrofit: Retrofit): VideoService =
+        retrofit.create(VideoService::class.java)
 }

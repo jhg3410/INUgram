@@ -38,7 +38,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.R
@@ -75,7 +74,7 @@ fun UploadScreen(
                     shape = RoundedCornerShape(16.dp)
                 )
                 .aspectRatio(300f / 484f),
-            contentUri = viewModel.contentUri.toUri()
+            contentUri = viewModel.contentUri
         )
         Spacer(modifier = Modifier.height(22.dp))
         DescriptionField(
