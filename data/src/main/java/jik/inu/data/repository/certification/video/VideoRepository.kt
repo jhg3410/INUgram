@@ -4,5 +4,5 @@ import android.net.Uri
 
 interface VideoRepository {
 
-    suspend fun upload(contentUri: Uri): Result<Unit>
+    suspend fun upload(contentUri: Uri, description: String): Result<Unit>
 }

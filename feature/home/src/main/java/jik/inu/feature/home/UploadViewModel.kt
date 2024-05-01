@@ -28,16 +28,18 @@ class UploadViewModel @Inject constructor(
 
     fun upload() {
         viewModelScope.launch {
-            videoRepository.upload(contentUri = contentUri)
-                .onSuccess {
-                    toastType.value = ToastType.SUCCESS
-                    toastMessage.value = "정상적으로 업로드 되었어요"
-                }.onFailure {
-                    toastType.value = ToastType.ERROR
-                    toastMessage.value = "업로드에 실패했어요"
-                }.also {
-                    visibleToast.value = true
-                }
+            videoRepository.upload(
+                contentUri = contentUri,
+                description = inputDescription.value.text
+            ).onSuccess {
+                toastType.value = ToastType.SUCCESS
+                toastMessage.value = "정상적으로 업로드 되었어요"
+            }.onFailure {
+                toastType.value = ToastType.ERROR
+                toastMessage.value = "업로드에 실패했어요"
+            }.also {
+                visibleToast.value = true
+            }
         }
     }
 

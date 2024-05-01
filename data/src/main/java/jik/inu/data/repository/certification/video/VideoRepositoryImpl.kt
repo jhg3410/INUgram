@@ -7,6 +7,7 @@ import jik.inu.data.network.service.VideoService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -17,7 +18,8 @@ class VideoRepositoryImpl @Inject constructor(
 ) : VideoRepository {
 
     override suspend fun upload(
-        contentUri: Uri
+        contentUri: Uri,
+        description: String
     ): Result<Unit> {
         return runCatching {
             val file = File.createTempFile("temp", null, context.cacheDir)
@@ -34,7 +36,8 @@ class VideoRepositoryImpl @Inject constructor(
 
             val requestBody = file.asRequestBody("video/mp4".toMediaTypeOrNull())
             val videoPart = MultipartBody.Part.createFormData("video", file.name, requestBody)
-            videoService.upload(videoPart)
+
+            videoService.upload(videoPart, description.toRequestBody())
         }
     }
 }
