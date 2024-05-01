@@ -67,22 +67,26 @@ enum class ToastType(
     val icon: ImageVector,
     val iconColor: Color,
     val strokeColor: Color,
+    val backgroundColor: Color,
     val contentDescription: String = this.toString()
 ) {
     SUCCESS(
         icon = Icons.Rounded.CheckCircle,
         iconColor = Color(0xFF00B800),
         strokeColor = Color(0xFF78D361),
+        backgroundColor = Color(0xFFFEFFFE),
     ),
     ERROR(
         icon = Icons.Rounded.AddCircle,
         iconColor = Color(0xFFFF0000),
         strokeColor = Color(0xFFFF8181),
+        backgroundColor = Color(0xFFFFFEFE)
     ),
     WARNING(
         icon = Icons.Rounded.Error,
         iconColor = Color(0xFFFFA800),
         strokeColor = Color(0xFFFFC581),
+        backgroundColor = Color(0xFFFFFFFE)
     )
 }
 
@@ -118,7 +122,7 @@ fun IGToast(
             Row(
                 modifier = modifier
                     .background(
-                        color = Color(0xFFFFFCF2),
+                        color = type.backgroundColor,
                         shape = RoundedCornerShape(100.dp)
                     )
                     .border(
