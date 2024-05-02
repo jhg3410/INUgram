@@ -27,14 +27,16 @@ object UploadNavigation {
         }
     )
 
-    fun NavGraphBuilder.installUploadScreen() {
+    fun NavGraphBuilder.installUploadScreen(
+        navigateToHome: () -> Unit
+    ) {
         composable(
             route = routeWithArgs,
             arguments = arguments,
             enterTransition = { slideInVertically { it } },
             exitTransition = { slideOutVertically { it } }
         ) {
-            UploadScreen()
+            UploadScreen(navigateToHome = navigateToHome)
         }
     }
 }

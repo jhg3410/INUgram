@@ -20,8 +20,8 @@ object HomeNavigation {
         }
     }
 
-    fun NavGraphBuilder.installHomeNavGraph() {
+    fun NavGraphBuilder.installHomeNavGraph(navigateToHome: () -> Unit) {
         installHomeScreen()
-        installUploadScreen()
+        installUploadScreen(navigateToHome = navigateToHome)
     }
 }

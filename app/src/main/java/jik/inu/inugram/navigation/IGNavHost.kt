@@ -31,7 +31,9 @@ fun IGNavHost(
             navigateUp = navController::navigateUp
         )
 
-        installHomeNavGraph()
+        installHomeNavGraph(
+            navigateToHome = navController::navigateHome
+        )
 
         installMyPageNavGraph()
     }

@@ -48,7 +48,8 @@ import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 @Composable
 fun UploadScreen(
     modifier: Modifier = Modifier,
-    viewModel: UploadViewModel = hiltViewModel()
+    viewModel: UploadViewModel = hiltViewModel(),
+    navigateToHome: () -> Unit
 ) {
     val textInput by viewModel.inputDescription.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
@@ -83,7 +84,7 @@ fun UploadScreen(
         )
         Spacer(modifier = Modifier.height(22.dp))
         UploadButton(modifier = Modifier.fillMaxWidth()) {
-            viewModel.upload()
+            viewModel.upload(onSuccess = navigateToHome)
         }
     }
 

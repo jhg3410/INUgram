@@ -26,7 +26,7 @@ class UploadViewModel @Inject constructor(
     val toastType = MutableStateFlow(ToastType.SUCCESS)
     val toastMessage = MutableStateFlow("")
 
-    fun upload() {
+    fun upload(onSuccess: () -> Unit) {
         viewModelScope.launch {
             videoRepository.upload(
                 contentUri = contentUri,
@@ -34,6 +34,7 @@ class UploadViewModel @Inject constructor(
             ).onSuccess {
                 toastType.value = ToastType.SUCCESS
                 toastMessage.value = "정상적으로 업로드 되었어요"
+                onSuccess()
             }.onFailure {
                 toastType.value = ToastType.ERROR
                 toastMessage.value = it.message ?: "업로드에 실패했어요"
