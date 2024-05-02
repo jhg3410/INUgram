@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jik.inu.data.network.service.VideoService
+import jik.inu.data.util.jikCatching
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -21,7 +22,7 @@ class VideoRepositoryImpl @Inject constructor(
         contentUri: Uri,
         description: String
     ): Result<Unit> {
-        return runCatching {
+        return jikCatching {
             val file = File.createTempFile("temp", null, context.cacheDir)
             context.contentResolver.openInputStream(contentUri).use { inputStream ->
                 if (inputStream != null) {

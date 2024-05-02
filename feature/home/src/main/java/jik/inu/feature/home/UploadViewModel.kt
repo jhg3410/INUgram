@@ -36,7 +36,7 @@ class UploadViewModel @Inject constructor(
                 toastMessage.value = "정상적으로 업로드 되었어요"
             }.onFailure {
                 toastType.value = ToastType.ERROR
-                toastMessage.value = "업로드에 실패했어요"
+                toastMessage.value = it.message ?: "업로드에 실패했어요"
             }.also {
                 visibleToast.value = true
             }
