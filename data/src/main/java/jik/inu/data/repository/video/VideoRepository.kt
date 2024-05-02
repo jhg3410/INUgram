@@ -1,4 +1,4 @@
-package jik.inu.data.repository.certification.video
+package jik.inu.data.repository.video
 
 import android.net.Uri
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jik.inu.core.designsystem.component.toast.ToastType
-import jik.inu.data.repository.certification.video.VideoRepository
+import jik.inu.data.repository.video.VideoRepository
 import jik.inu.feature.home.navigation.UploadArgs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
