@@ -21,10 +21,13 @@ import kotlinx.coroutines.delay
 
 /**
 just play and stop player
+
+@param isAutoReplay: if true, the video will be replayed automatically when it ends
  */
 @Composable
 fun SimpleVideoPlayer(
     modifier: Modifier = Modifier,
+    isAutoReplay: Boolean = false,
     contentUri: Uri
 ) {
     val context = LocalContext.current
@@ -40,6 +43,7 @@ fun SimpleVideoPlayer(
 
     val player = remember {
         ExoPlayer.Builder(context).build().apply {
+            repeatMode = if (isAutoReplay) ExoPlayer.REPEAT_MODE_ONE else ExoPlayer.REPEAT_MODE_OFF
             addListener(stateChangedListener)
             setMediaItem(MediaItem.fromUri(contentUri))
             playWhenReady = true
