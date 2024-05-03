@@ -7,7 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import jik.inu.data.repository.certification.CertificationRepository
 import jik.inu.data.repository.certification.CertificationRepositoryImpl
 import jik.inu.data.repository.video.VideoRepository
-import jik.inu.data.repository.video.VideoRepositoryImpl
+import jik.inu.data.repository.video.VideoRepositoryMock
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -20,6 +20,6 @@ interface RepositoryModule {
 
     @Binds
     fun bindVideoRepository(
-        videoRepositoryImpl: VideoRepositoryImpl
+        videoRepositoryMock: VideoRepositoryMock
     ): VideoRepository
 }

@@ -3,6 +3,7 @@ package jik.inu.data.repository.video
 import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
+import jik.inu.core.model.Video
 import jik.inu.data.network.service.VideoService
 import jik.inu.data.util.jikCatching
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -40,5 +41,9 @@ class VideoRepositoryImpl @Inject constructor(
 
             videoService.upload(videoPart, description.toRequestBody())
         }
+    }
+
+    override suspend fun getVideos(): Result<List<Video>> {
+        TODO("Not yet implemented")
     }
 }

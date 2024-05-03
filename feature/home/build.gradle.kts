@@ -43,6 +43,7 @@ dependencies {
     // modules
     implementation(projects.data)
     implementation(projects.core.designsystem)
+    implementation(projects.core.model)
     implementation(projects.core.ui)
     implementation(projects.lib.videoplayer)
 
@@ -55,6 +56,9 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.preview)
     implementation(libs.compose.material3)
+
+    // coil
+    implementation(libs.compose.coil)
 
     // lifecycle
     implementation(libs.lifecycle.viewmodel)
