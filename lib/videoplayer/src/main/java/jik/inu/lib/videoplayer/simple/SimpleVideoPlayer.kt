@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -15,6 +16,10 @@ import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import jik.inu.lib.videoplayer.VideoPlayerScreen
+import jik.inu.lib.videoplayer.controller.ControllerLoadingWheel
+import jik.inu.lib.videoplayer.controller.ControllerPauseIcon
+import jik.inu.lib.videoplayer.controller.ControllerPlayIcon
+import jik.inu.lib.videoplayer.controller.ControllerReplayIcon
 import jik.inu.lib.videoplayer.listener.VideoPlayerListener.stateChangedListener
 import kotlinx.coroutines.delay
 
@@ -33,6 +38,8 @@ fun SimpleVideoPlayer(
     val context = LocalContext.current
     var controllerVisible by remember { mutableStateOf(false) }
     var playerState by remember { mutableStateOf(PlayerState.PLAYING) }
+    var controllerSymbol by remember { mutableStateOf<@Composable () -> Unit>({}) }
+    var tapCount by remember { mutableLongStateOf(0L) }
 
     val stateChangedListener = stateChangedListener { changedPlayer ->
         playerState = getControllerState(
@@ -56,20 +63,49 @@ fun SimpleVideoPlayer(
         player.release()
     }
 
+    var isAfterEndedAndLoading by remember { mutableStateOf(false) }
     LaunchedEffect(key1 = playerState) {
-        if (playerState != PlayerState.ENDED) {
-            if (controllerVisible) {
-                delay(1_000)
-                controllerVisible = false
-            }
-        } else {
+        if (playerState == PlayerState.ENDED || playerState == PlayerState.LOADING) {
             controllerVisible = true
+            isAfterEndedAndLoading = true
+        } else {
+            if (controllerVisible) {
+                if (isAfterEndedAndLoading) {
+                    controllerVisible = false
+                    isAfterEndedAndLoading = false
+                } else {
+                    delay(1_000)
+                    controllerVisible = false
+                }
+            }
         }
     }
 
     LifecycleStartEffect {
         onStopOrDispose {
             releasePlayer()
+        }
+    }
+
+    LaunchedEffect(key1 = controllerVisible, key2 = tapCount) {
+        if (controllerVisible) {
+            controllerSymbol = when (playerState) {
+                PlayerState.PLAYING -> {
+                    { ControllerPlayIcon() }
+                }
+
+                PlayerState.PAUSED -> {
+                    { ControllerPauseIcon() }
+                }
+
+                PlayerState.ENDED -> {
+                    { ControllerReplayIcon() }
+                }
+
+                PlayerState.LOADING -> {
+                    { ControllerLoadingWheel() }
+                }
+            }
         }
     }
 
@@ -89,12 +125,13 @@ fun SimpleVideoPlayer(
                 } else {
                     player.play()
                 }
+                tapCount += 1
                 controllerVisible = true
             }
         )
         SimpleVideoPlayerController(
             visible = controllerVisible,
-            playerState = playerState,
+            controllerSymbol = controllerSymbol
         )
     }
 }
