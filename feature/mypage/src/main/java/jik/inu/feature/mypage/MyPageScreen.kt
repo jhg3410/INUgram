@@ -12,16 +12,22 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import jik.inu.feature.mypage.tab.MyPageTabRow
 
 @Composable
 fun MyPageScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    myPageViewModel: MyPageViewModel = hiltViewModel()
 ) {
+    val selectedTabIndex by myPageViewModel.selectedTabIndex.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -29,8 +35,16 @@ fun MyPageScreen(
             .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.height(20.dp))
-        MyInfo(profileColor = Color(0xFF3780ED), email = "jhg3410")
+        Spacer(modifier = Modifier.height(40.dp))
+        MyInfo(profileColor = Color(0xFF3780ED), email = "jhg3410@inu.ac.kr")
+        Spacer(modifier = Modifier.height(40.dp))
+        MyPageTabRow(
+            tabs = myPageViewModel.tabs,
+            selectedTabIndex = selectedTabIndex,
+            onChangeSelectedTabIndex = {
+                myPageViewModel.onSelectedTabChanged(it)
+            }
+        )
     }
 }
 
