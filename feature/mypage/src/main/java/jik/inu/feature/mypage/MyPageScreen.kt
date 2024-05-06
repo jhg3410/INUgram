@@ -45,6 +45,7 @@ fun MyPageScreen(
                 myPageViewModel.onSelectedTabChanged(it)
             }
         )
+        MyVideosScreen(modifier = Modifier.weight(1f))
     }
 }
 

@@ -54,6 +54,9 @@ dependencies {
     implementation(libs.compose.preview)
     implementation(libs.compose.material3)
 
+    // coil
+    implementation(libs.compose.coil)
+
     // lifecycle
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.runtime)
