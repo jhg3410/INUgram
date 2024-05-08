@@ -62,17 +62,18 @@ fun HomeScreen(
                 VideoInteractionOverlay(description = videos[index].description)
             }
         } else {
-            VideoThumbnail()
+            VideoThumbnail(thumbnailUrl = videos[index].thumbnail)
         }
     }
 }
 
 @Composable
 private fun VideoThumbnail(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    thumbnailUrl: String
 ) {
     AsyncImage(
-        model = "https://image.tmdb.org/t/p/w500/sLD3mTo4Fck1UxbJWLrjaTnwwFl.jpg",
+        model = thumbnailUrl,
         contentDescription = "Video Thumbnail",
         modifier = modifier.fillMaxSize(),
     )
@@ -104,9 +105,11 @@ private fun VideoInteractionOverlay(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
-                    modifier = Modifier.size(40.dp).clickable {
-                        Log.d("HomeScreen", "Favorite Clicked")
-                    },
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clickable {
+                            Log.d("HomeScreen", "Favorite Clicked")
+                        },
                     imageVector = IGIcons.Favorite,
                     contentDescription = "Favorite",
                     tint = Blue50

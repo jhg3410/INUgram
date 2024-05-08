@@ -44,6 +44,8 @@ class VideoRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getVideos(): Result<List<Video>> {
-        TODO("Not yet implemented")
+        return jikCatching {
+            videoService.getVideos(page = 0, size = 10).videos
+        }
     }
 }
