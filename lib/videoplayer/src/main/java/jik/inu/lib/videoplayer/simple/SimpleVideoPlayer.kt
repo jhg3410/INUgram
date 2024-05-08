@@ -33,13 +33,15 @@ just play and stop player
 fun SimpleVideoPlayer(
     modifier: Modifier = Modifier,
     isAutoReplay: Boolean = false,
-    contentUri: Uri
+    contentUri: Uri,
+    thumbnail: (@Composable () -> Unit)? = null
 ) {
     val context = LocalContext.current
     var controllerVisible by remember { mutableStateOf(false) }
     var playerState by remember { mutableStateOf(PlayerState.PLAYING) }
     var controllerSymbol by remember { mutableStateOf<@Composable () -> Unit>({}) }
     var tapCount by remember { mutableLongStateOf(0L) }
+    var thumbnailVisible by remember { mutableStateOf(true) }
 
     val stateChangedListener = stateChangedListener { changedPlayer ->
         playerState = getControllerState(
@@ -61,6 +63,12 @@ fun SimpleVideoPlayer(
     fun releasePlayer() {
         player.removeListener(stateChangedListener)
         player.release()
+    }
+
+    LaunchedEffect(key1 = playerState) {
+        if (playerState == PlayerState.PLAYING && thumbnailVisible) {
+            thumbnailVisible = false
+        }
     }
 
     var isAfterEndedAndLoading by remember { mutableStateOf(false) }
@@ -133,5 +141,8 @@ fun SimpleVideoPlayer(
             visible = controllerVisible,
             controllerSymbol = controllerSymbol
         )
+        if (thumbnail != null && thumbnailVisible) {
+            thumbnail()
+        }
     }
 }

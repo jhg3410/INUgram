@@ -58,7 +58,9 @@ fun HomeScreen(
                     .fillMaxSize()
                     .background(color = Color.Black)
             ) {
-                SimpleVideoPlayer(contentUri = videos[index].url.toUri())
+                SimpleVideoPlayer(contentUri = videos[index].url.toUri()) {
+                    VideoThumbnail(thumbnailUrl = videos[index].thumbnail)
+                }
                 VideoInteractionOverlay(description = videos[index].description)
             }
         } else {
