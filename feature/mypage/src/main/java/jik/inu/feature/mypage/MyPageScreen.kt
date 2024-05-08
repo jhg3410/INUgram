@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -16,10 +17,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import jik.inu.core.designsystem.theme.Blue50
 import jik.inu.feature.mypage.tab.MyPageTabRow
 
 @Composable
@@ -28,6 +31,7 @@ fun MyPageScreen(
     myPageViewModel: MyPageViewModel = hiltViewModel()
 ) {
     val selectedTabIndex by myPageViewModel.selectedTabIndex.collectAsStateWithLifecycle()
+    val profileColor = Blue50
 
     Column(
         modifier = modifier
@@ -35,9 +39,24 @@ fun MyPageScreen(
             .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
-        MyInfo(profileColor = Color(0xFF3780ED), email = "jhg3410@inu.ac.kr")
-        Spacer(modifier = Modifier.height(40.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            profileColor.copy(0.5f),
+                            profileColor.copy(0.2f),
+                            Color.White
+                        )
+                    )
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(modifier = Modifier.height(40.dp))
+            MyInfo(profileColor = profileColor, email = "jhg3410@inu.ac.kr")
+            Spacer(modifier = Modifier.height(40.dp))
+        }
         MyPageTabRow(
             tabs = myPageViewModel.tabs,
             selectedTabIndex = selectedTabIndex,
@@ -71,7 +90,8 @@ private fun MyInfo(profileColor: Color, email: String) {
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = email,
-            style = MaterialTheme.typography.bodySmall,
+            color = Color.Black,
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }
