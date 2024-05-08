@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationBar
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationBarItem
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationButton
+import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.core.designsystem.theme.INUgramTheme
 import jik.inu.feature.home.navigation.navigateUpload
 import jik.inu.inugram.navigation.IGNavHost
@@ -31,6 +32,7 @@ fun IGApp() {
             bottomBar = {
                 IGBottomBar(
                     visible = currentTopLevelDestinationOrNull != null,
+                    theme = appState.navigationBarTheme,
                     topLevelDestination = TopLevelDestination.entries,
                     currentTopLevelDestination = currentTopLevelDestinationOrNull,
                     onNavigateToDestination = { destination ->
@@ -48,7 +50,8 @@ fun IGApp() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it),
-                navController = appState.navController
+                navController = appState.navController,
+                changeNavigationBarTheme = appState::changeNavigationBarTheme
             )
         }
     }
@@ -58,6 +61,7 @@ fun IGApp() {
 @Composable
 fun IGBottomBar(
     visible: Boolean,
+    theme: NavigationBarTheme,
     topLevelDestination: List<TopLevelDestination>,
     currentTopLevelDestination: TopLevelDestination?,
     modifier: Modifier = Modifier,
@@ -80,6 +84,7 @@ fun IGBottomBar(
     ) {
         IGNavigationBar(
             modifier = modifier,
+            theme = theme,
             content = {
                 topLevelDestination.forEachIndexed { index, destination ->
                     val selected = destination.route == currentTopLevelDestination?.route
@@ -92,6 +97,7 @@ fun IGBottomBar(
                     }
                     IGNavigationBarItem(
                         selected = selected,
+                        theme = theme,
                         onClick = { onNavigateToDestination(destination) },
                         iconImageVector = destination.icon,
                         selectedIconImageVector = destination.icon,

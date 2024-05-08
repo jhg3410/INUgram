@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.feature.mypage.MyPageScreen
 
 fun NavController.navigateMyPage(navOptions: NavOptions? = null) {
@@ -13,13 +14,17 @@ fun NavController.navigateMyPage(navOptions: NavOptions? = null) {
 object MyPageNavigation {
     const val route = "MyPage"
 
-    private fun NavGraphBuilder.installMyPageScreen() {
+    private fun NavGraphBuilder.installMyPageScreen(
+        changeNavigationBarTheme: (NavigationBarTheme) -> Unit
+    ) {
         composable(route = MyPageNavigation.route) {
-            MyPageScreen()
+            MyPageScreen(changeNavigationBarTheme = changeNavigationBarTheme)
         }
     }
 
-    fun NavGraphBuilder.installMyPageNavGraph() {
-        installMyPageScreen()
+    fun NavGraphBuilder.installMyPageNavGraph(
+        changeNavigationBarTheme: (NavigationBarTheme) -> Unit
+    ) {
+        installMyPageScreen(changeNavigationBarTheme = changeNavigationBarTheme)
     }
 }

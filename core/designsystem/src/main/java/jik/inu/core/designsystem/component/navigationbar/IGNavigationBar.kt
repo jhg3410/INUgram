@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,11 +39,12 @@ import jik.inu.core.designsystem.icon.IGIcons
 @Composable
 fun IGNavigationBar(
     modifier: Modifier = Modifier,
+    theme: NavigationBarTheme,
     content: @Composable RowScope.() -> Unit,
 ) {
     Surface(
         modifier = modifier,
-        color = MaterialTheme.colorScheme.surface,
+        color = theme.backgroundColor,
         shadowElevation = 4.dp
     ) {
         Row(
@@ -60,6 +60,7 @@ fun IGNavigationBar(
 @Composable
 fun RowScope.IGNavigationBarItem(
     modifier: Modifier = Modifier,
+    theme: NavigationBarTheme,
     selected: Boolean,
     iconImageVector: ImageVector,
     selectedIconImageVector: ImageVector = iconImageVector,
@@ -89,6 +90,7 @@ fun RowScope.IGNavigationBarItem(
     ) {
         MovieNavigationBarItemLabelAndIcon(
             selected = selected,
+            theme = theme,
             iconImageVector = iconImageVector,
             selectedIconImageVector = selectedIconImageVector,
             labelText = labelText
@@ -99,6 +101,7 @@ fun RowScope.IGNavigationBarItem(
 @Composable
 private fun MovieNavigationBarItemLabelAndIcon(
     selected: Boolean,
+    theme: NavigationBarTheme,
     iconImageVector: ImageVector,
     selectedIconImageVector: ImageVector,
     labelText: String,
@@ -110,12 +113,12 @@ private fun MovieNavigationBarItemLabelAndIcon(
     ) {
         Icon(
             imageVector = if (selected) selectedIconImageVector else iconImageVector,
-            tint = if (selected) selectedIconColor() else unselectedIconColor(),
+            tint = if (selected) selectedIconColor(theme) else unselectedIconColor(theme),
             contentDescription = null
         )
         Text(
             text = labelText,
-            color = if (selected) selectedTextColor() else unselectedTextColor(),
+            color = if (selected) selectedTextColor(theme) else unselectedTextColor(theme),
             fontWeight = FontWeight.SemiBold,
             fontSize = 12.sp
         )
@@ -125,17 +128,21 @@ private fun MovieNavigationBarItemLabelAndIcon(
 @Preview
 @Composable
 fun IGNavigationBarPreview() {
-    IGNavigationBar {
+    IGNavigationBar(theme = NavigationBarTheme.Light) {
         IGNavigationBarItem(
             selected = true,
+            theme = NavigationBarTheme.Light,
             iconImageVector = IGIcons.Error,
             labelText = "hihi",
-            onClick = {})
+            onClick = {}
+        )
         IGNavigationButton(onClick = {})
         IGNavigationBarItem(
             selected = true,
+            theme = NavigationBarTheme.Light,
             iconImageVector = IGIcons.Error,
             labelText = "hihi",
-            onClick = {})
+            onClick = {}
+        )
     }
 }

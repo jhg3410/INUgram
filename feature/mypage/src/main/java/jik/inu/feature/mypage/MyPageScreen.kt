@@ -22,13 +22,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.core.designsystem.theme.Blue50
 import jik.inu.feature.mypage.tab.MyPageTabRow
 
 @Composable
 fun MyPageScreen(
     modifier: Modifier = Modifier,
-    myPageViewModel: MyPageViewModel = hiltViewModel()
+    myPageViewModel: MyPageViewModel = hiltViewModel(),
+    changeNavigationBarTheme: (NavigationBarTheme) -> Unit
 ) {
     val selectedTabIndex by myPageViewModel.selectedTabIndex.collectAsStateWithLifecycle()
     val profileColor = Blue50

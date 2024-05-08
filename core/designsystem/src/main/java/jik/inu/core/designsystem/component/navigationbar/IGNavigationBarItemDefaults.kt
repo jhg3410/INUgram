@@ -1,18 +1,49 @@
 package jik.inu.core.designsystem.component.navigationbar
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 internal object IGNavigationBarItemDefaults {
     @Composable
-    fun selectedIconColor() = MaterialTheme.colorScheme.onSurface
+    fun selectedIconColor(
+        theme: NavigationBarTheme
+    ) = when (theme) {
+        NavigationBarTheme.Light -> Color.Black
+        NavigationBarTheme.Dark -> Color.White
+    }
 
     @Composable
-    fun selectedTextColor() = MaterialTheme.colorScheme.onSurface
+    fun selectedTextColor(
+        theme: NavigationBarTheme
+    ) = when (theme) {
+        NavigationBarTheme.Light -> Color.Black
+        NavigationBarTheme.Dark -> Color.White
+    }
 
     @Composable
-    fun unselectedIconColor() = MaterialTheme.colorScheme.outline
+    fun unselectedIconColor(
+        theme: NavigationBarTheme
+    ) = when (theme) {
+        NavigationBarTheme.Light -> Color.Black.copy(alpha = 0.5f)
+        NavigationBarTheme.Dark -> Color.White.copy(alpha = 0.5f)
+    }
 
     @Composable
-    fun unselectedTextColor() = MaterialTheme.colorScheme.outline
+    fun unselectedTextColor(
+        theme: NavigationBarTheme
+    ) = when (theme) {
+        NavigationBarTheme.Light -> Color.Black.copy(alpha = 0.5f)
+        NavigationBarTheme.Dark -> Color.White.copy(alpha = 0.5f)
+    }
+}
+
+enum class NavigationBarTheme(
+    val backgroundColor: Color
+) {
+    Light(
+        backgroundColor = Color.White
+    ),
+    Dark(
+        backgroundColor = Color.Black
+    )
 }

@@ -1,9 +1,12 @@
 package jik.inu.inugram.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.feature.certification.navigation.GreetingNavigation.installCertificationNavGraph
 import jik.inu.feature.certification.navigation.navigateCertification
 import jik.inu.feature.certification.navigation.navigateEmail
@@ -18,11 +21,14 @@ fun IGNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     startDestination: String = HomeNavigation.route,
+    changeNavigationBarTheme: (NavigationBarTheme) -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier
+        modifier = modifier,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None }
     ) {
         installCertificationNavGraph(
             navigateToEmail = navController::navigateEmail,
@@ -32,9 +38,12 @@ fun IGNavHost(
         )
 
         installHomeNavGraph(
+            changeNavigationBarTheme = changeNavigationBarTheme,
             navigateToHome = navController::navigateHome
         )
 
-        installMyPageNavGraph()
+        installMyPageNavGraph(
+            changeNavigationBarTheme = changeNavigationBarTheme
+        )
     }
 }

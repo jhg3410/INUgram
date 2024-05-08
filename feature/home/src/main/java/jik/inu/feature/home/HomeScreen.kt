@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +30,7 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.core.designsystem.icon.IGIcons
 import jik.inu.core.designsystem.theme.Blue50
 import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
@@ -37,7 +39,8 @@ import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    changeNavigationBarTheme: (NavigationBarTheme) -> Unit
 ) {
     val videos by homeViewModel.videos.collectAsStateWithLifecycle()
     var preIdx by remember { mutableIntStateOf(0) }
@@ -45,6 +48,14 @@ fun HomeScreen(
     val pagerState = rememberPagerState(pageCount = { videos.size })
     if (pagerState.currentPageOffsetFraction == 0f) {
         preIdx = pagerState.currentPage
+    }
+
+    DisposableEffect(key1 = Unit) {
+        changeNavigationBarTheme(NavigationBarTheme.Dark)
+
+        onDispose {
+            changeNavigationBarTheme(NavigationBarTheme.Light)
+        }
     }
 
     VerticalPager(
