@@ -73,9 +73,11 @@ private fun VideoThumbnail(
     thumbnailUrl: String
 ) {
     AsyncImage(
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = Color.Black),
         model = thumbnailUrl,
         contentDescription = "Video Thumbnail",
-        modifier = modifier.fillMaxSize(),
     )
 }
 
