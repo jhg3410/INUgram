@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/feature/certification" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/mypage" />
+            <option value="$PROJECT_DIR$/feature/upload" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/lib/videoplayer" />
           </set>
