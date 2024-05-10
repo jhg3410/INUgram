@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -55,6 +56,7 @@ fun MyPageScreen(
                 ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Spacer(modifier = Modifier.statusBarsPadding())
             Spacer(modifier = Modifier.height(40.dp))
             MyInfo(profileColor = profileColor, email = "jhg3410@inu.ac.kr")
             Spacer(modifier = Modifier.height(40.dp))
