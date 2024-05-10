@@ -3,6 +3,7 @@ package jik.inu.feature.certification.greeting
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,7 +37,7 @@ fun GreetingScreen(
         enter = slideInVertically(animationSpec = tween(durationMillis = 1000)) { it },
     ) {
         Box(
-            modifier = modifier,
+            modifier = modifier.background(color = Color.White),
             contentAlignment = Alignment.Center
         ) {
             Text(
