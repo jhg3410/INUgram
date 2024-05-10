@@ -65,7 +65,9 @@ fun INUgramTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = colorScheme.copy(
+            primary = Blue50
+        ),
         typography = Typography,
         content = content
     )
