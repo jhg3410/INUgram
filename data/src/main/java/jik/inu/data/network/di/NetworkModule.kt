@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    private val baseUrl = "http://inugram2-env.eba-qtg2ppft.ap-northeast-2.elasticbeanstalk.com"
+    private val baseUrl = "http://inugram5-env.eba-yciitx72.ap-northeast-2.elasticbeanstalk.com"
 
     @Provides
     @Singleton
