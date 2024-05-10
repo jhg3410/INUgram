@@ -49,18 +49,6 @@ fun EmailScreen(
         }
     }
 
-    if (isLoading) {
-        Box(
-            modifier = modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            LoadingWheel(
-                modifier = modifier,
-            )
-        }
-
-    }
-
     Column(
         modifier = modifier
             .statusBarsPadding()
@@ -93,5 +81,16 @@ fun EmailScreen(
                 viewModel.sendEmail(email)
             }
         )
+    }
+
+    if (isLoading) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .imePadding(),
+            contentAlignment = Alignment.Center
+        ) {
+            LoadingWheel()
+        }
     }
 }
