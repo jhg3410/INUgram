@@ -1,6 +1,7 @@
 package jik.inu.core.designsystem.icon
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Reply
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.rounded.Add
@@ -15,4 +16,5 @@ object IGIcons {
     val AddRounded = Icons.Rounded.Add
 
     val Favorite = Icons.Filled.Favorite
+    val Reply = Icons.AutoMirrored.Filled.Reply
 }
