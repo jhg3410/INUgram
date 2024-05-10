@@ -31,6 +31,7 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.core.designsystem.icon.IGIcons
 import jik.inu.core.designsystem.theme.Blue50
@@ -50,12 +51,21 @@ fun HomeScreen(
     if (pagerState.currentPageOffsetFraction == 0f) {
         preIdx = pagerState.currentPage
     }
+    val systemUiController = rememberSystemUiController()
 
     DisposableEffect(key1 = Unit) {
         changeNavigationBarTheme(NavigationBarTheme.Dark)
+        systemUiController.setStatusBarColor(
+            color = Color.Transparent,
+            darkIcons = false
+        )
 
         onDispose {
             changeNavigationBarTheme(NavigationBarTheme.Light)
+            systemUiController.setStatusBarColor(
+                color = Color.Transparent,
+                darkIcons = true
+            )
         }
     }
 
