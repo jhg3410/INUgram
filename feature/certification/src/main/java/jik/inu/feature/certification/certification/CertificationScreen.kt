@@ -55,17 +55,9 @@ fun CertificationScreen(
         focusRequester.requestFocus()
     }
 
-
-    IGToast.Show(
-        message = "인증번호를 다시 확인해 주세요",
-        type = ToastType.WARNING,
-        visible = visibleToast,
-        onDismiss = viewModel::closeToast
-    )
-
-
     Column(
         modifier = modifier
+            .background(color = Color.White)
             .pointerInput(key1 = Unit) {
                 detectTapGestures(onTap = { focusManager.clearFocus() })
             }
@@ -100,6 +92,13 @@ fun CertificationScreen(
             enable = inputNumber.length == 5
         )
     }
+
+    IGToast.Show(
+        message = "인증번호를 다시 확인해 주세요",
+        type = ToastType.WARNING,
+        visible = visibleToast,
+        onDismiss = viewModel::closeToast
+    )
 }
 
 @Composable
