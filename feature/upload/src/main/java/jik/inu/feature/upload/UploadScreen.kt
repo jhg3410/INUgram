@@ -1,4 +1,4 @@
-package jik.inu.feature.home
+package jik.inu.feature.upload
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -42,7 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.R
 import jik.inu.core.designsystem.component.toast.IGToast
-import jik.inu.feature.home.UploadButtonDefaults.ButtonStrokeBrush
+import jik.inu.feature.upload.UploadButtonDefaults.ButtonStrokeBrush
 import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 
 @Composable

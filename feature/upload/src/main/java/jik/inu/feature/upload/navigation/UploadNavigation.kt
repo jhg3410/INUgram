@@ -1,4 +1,4 @@
-package jik.inu.feature.home.navigation
+package jik.inu.feature.upload.navigation
 
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -9,8 +9,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import jik.inu.feature.home.UploadScreen
-import jik.inu.feature.home.navigation.UploadNavigation.route
+import jik.inu.feature.upload.navigation.UploadNavigation.route
 
 fun NavController.navigateUpload(contentUri: String, navOptions: NavOptions? = null) {
     navigate("${route}/$contentUri", navOptions)
@@ -19,7 +18,7 @@ fun NavController.navigateUpload(contentUri: String, navOptions: NavOptions? = n
 object UploadNavigation {
     const val contentUriArg = "contentUri"
     const val route = "upload"
-    private const val routeWithArgs = "${route}/{${contentUriArg}}"
+    private const val routeWithArgs = "${route}/{$contentUriArg}"
 
     private val arguments = listOf(
         navArgument(contentUriArg) {
@@ -36,7 +35,7 @@ object UploadNavigation {
             enterTransition = { slideInVertically { it } },
             exitTransition = { slideOutVertically { it } }
         ) {
-            UploadScreen(navigateToHome = navigateToHome)
+            jik.inu.feature.upload.UploadScreen(navigateToHome = navigateToHome)
         }
     }
 }

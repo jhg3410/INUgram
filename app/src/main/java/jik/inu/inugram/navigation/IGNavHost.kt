@@ -11,9 +11,10 @@ import jik.inu.feature.certification.navigation.GreetingNavigation.installCertif
 import jik.inu.feature.certification.navigation.navigateCertification
 import jik.inu.feature.certification.navigation.navigateEmail
 import jik.inu.feature.home.navigation.HomeNavigation
-import jik.inu.feature.home.navigation.HomeNavigation.installHomeNavGraph
+import jik.inu.feature.home.navigation.HomeNavigation.installHomeScreen
 import jik.inu.feature.home.navigation.navigateHome
 import jik.inu.feature.mypage.navigation.MyPageNavigation.installMyPageNavGraph
+import jik.inu.feature.upload.navigation.UploadNavigation.installUploadScreen
 
 
 @Composable
@@ -37,8 +38,11 @@ fun IGNavHost(
             navigateUp = navController::navigateUp
         )
 
-        installHomeNavGraph(
+        installHomeScreen(
             changeNavigationBarTheme = changeNavigationBarTheme,
+        )
+
+        installUploadScreen(
             navigateToHome = navController::navigateHome
         )
 

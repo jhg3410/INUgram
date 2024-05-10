@@ -18,7 +18,7 @@ import jik.inu.core.designsystem.component.navigationbar.IGNavigationBarItem
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationButton
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.core.designsystem.theme.INUgramTheme
-import jik.inu.feature.home.navigation.navigateUpload
+import jik.inu.feature.upload.navigation.navigateUpload
 import jik.inu.inugram.navigation.IGNavHost
 import jik.inu.inugram.navigation.TopLevelDestination
 import java.net.URLEncoder

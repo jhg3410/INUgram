@@ -57,6 +57,7 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.feature.certification)
     implementation(projects.feature.home)
+    implementation(projects.feature.upload)
     implementation(projects.feature.mypage)
 
     implementation(libs.androidx.ktx)
