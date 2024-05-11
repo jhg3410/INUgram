@@ -42,6 +42,7 @@ android {
 dependencies {
     // modules
     implementation(projects.data)
+    implementation(projects.core.model)
     implementation(projects.core.designsystem)
 
     implementation(libs.androidx.ktx)

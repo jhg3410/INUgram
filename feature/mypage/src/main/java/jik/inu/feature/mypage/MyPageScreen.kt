@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
-import jik.inu.core.designsystem.theme.Blue50
 import jik.inu.feature.mypage.tab.MyPageTabRow
 
 @Composable
@@ -34,7 +33,8 @@ fun MyPageScreen(
     changeNavigationBarTheme: (NavigationBarTheme) -> Unit
 ) {
     val selectedTabIndex by myPageViewModel.selectedTabIndex.collectAsStateWithLifecycle()
-    val profileColor = Blue50
+    val email by myPageViewModel.email.collectAsStateWithLifecycle()
+    val profileColor by myPageViewModel.profileColor.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -58,7 +58,7 @@ fun MyPageScreen(
         ) {
             Spacer(modifier = Modifier.statusBarsPadding())
             Spacer(modifier = Modifier.height(40.dp))
-            MyInfo(profileColor = profileColor, email = "jhg3410@inu.ac.kr")
+            MyInfo(profileColor = profileColor, email = email)
             Spacer(modifier = Modifier.height(40.dp))
         }
         MyPageTabRow(
@@ -86,7 +86,7 @@ private fun MyInfo(profileColor: Color, email: String) {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = email.first().toString(),
+                text = (email.firstOrNull() ?: "").toString(),
                 color = Color.White,
                 style = MaterialTheme.typography.titleLarge,
             )

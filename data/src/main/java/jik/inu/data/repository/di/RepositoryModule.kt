@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import jik.inu.data.repository.certification.CertificationRepository
 import jik.inu.data.repository.certification.CertificationRepositoryImpl
+import jik.inu.data.repository.user.UserRepository
+import jik.inu.data.repository.user.UserRepositoryImpl
 import jik.inu.data.repository.video.VideoRepository
 import jik.inu.data.repository.video.VideoRepositoryImpl
 
@@ -22,4 +24,9 @@ interface RepositoryModule {
     fun bindVideoRepository(
         videoRepositoryImpl: VideoRepositoryImpl
     ): VideoRepository
+
+    @Binds
+    fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 }

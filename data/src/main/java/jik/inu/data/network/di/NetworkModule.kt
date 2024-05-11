@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import jik.inu.data.network.interceptor.AuthInterceptor
 import jik.inu.data.network.interceptor.provideLoggingInterceptor
 import jik.inu.data.network.service.CertificationService
+import jik.inu.data.network.service.UserService
 import jik.inu.data.network.service.VideoService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -48,4 +49,9 @@ class NetworkModule {
     @Singleton
     fun provideVideoService(retrofit: Retrofit): VideoService =
         retrofit.create(VideoService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
 }
