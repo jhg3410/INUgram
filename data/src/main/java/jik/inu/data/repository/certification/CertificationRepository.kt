@@ -6,5 +6,5 @@ interface CertificationRepository {
 
     suspend fun getAccessToken(email: String): Result<String>
 
-    suspend fun saveAccessToken(accessToken: String): Result<Unit>
+    suspend fun saveAccessToken(accessToken: String)
 }

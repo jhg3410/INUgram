@@ -1,4 +1,4 @@
-package jik.inu.data.di
+package jik.inu.data.repository.di
 
 import dagger.Binds
 import dagger.Module

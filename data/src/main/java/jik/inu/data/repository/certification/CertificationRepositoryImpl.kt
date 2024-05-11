@@ -1,12 +1,14 @@
 package jik.inu.data.repository.certification
 
+import jik.inu.data.datastore.CertificationPreferencesDataSource
 import jik.inu.data.network.request.EmailRequest
 import jik.inu.data.network.service.CertificationService
 import jik.inu.data.util.jikCatching
 import javax.inject.Inject
 
 class CertificationRepositoryImpl @Inject constructor(
-    private val service: CertificationService
+    private val service: CertificationService,
+    private val preferencesDataSource: CertificationPreferencesDataSource
 ) : CertificationRepository {
     override suspend fun sendEmail(email: String): Result<String> {
         return jikCatching {
@@ -20,7 +22,7 @@ class CertificationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveAccessToken(accessToken: String): Result<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun saveAccessToken(accessToken: String) {
+        preferencesDataSource.setAccessToken(accessToken)
     }
 }

@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import jik.inu.data.network.interceptor.AuthInterceptor
 import jik.inu.data.network.interceptor.provideLoggingInterceptor
 import jik.inu.data.network.service.CertificationService
 import jik.inu.data.network.service.VideoService
@@ -20,9 +21,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient =
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(provideLoggingInterceptor)
+            .addInterceptor(authInterceptor)
             .build()
 
     @Provides
