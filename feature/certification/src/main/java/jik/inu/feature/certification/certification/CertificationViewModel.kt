@@ -16,6 +16,7 @@ class CertificationViewModel @Inject constructor(
     private val certificationRepository: CertificationRepository
 ) : ViewModel() {
 
+    private val email = CertificationArgs(savedStateHandle).email
     private val certificationNumber = CertificationArgs(savedStateHandle).certificationNumber
     val inputNumber = MutableStateFlow("")
     var visibleToast = MutableStateFlow(false)
@@ -27,7 +28,13 @@ class CertificationViewModel @Inject constructor(
         } else {
             viewModelScope.launch {
                 launch {
-//                    certificationRepository.getAccessToken()
+                    certificationRepository.getAccessToken(email = "$email@inu.ac.kr").run {
+                        onSuccess {
+                            certificationRepository.saveAccessToken(it)
+                        }.onFailure {
+                            // TODO: 에러 처리
+                        }
+                    }
                 }.join()
                 action()
             }
