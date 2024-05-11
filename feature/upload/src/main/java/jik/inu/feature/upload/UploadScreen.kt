@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.R
+import jik.inu.core.designsystem.component.LoadingWheel
 import jik.inu.core.designsystem.component.toast.IGToast
 import jik.inu.feature.upload.UploadButtonDefaults.ButtonStrokeBrush
 import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
@@ -57,6 +59,7 @@ fun UploadScreen(
     val visibleToast by viewModel.visibleToast.collectAsStateWithLifecycle()
     val toastType by viewModel.toastType.collectAsStateWithLifecycle()
     val toastMessage by viewModel.toastMessage.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -83,9 +86,13 @@ fun UploadScreen(
             onInputChange = { viewModel.changeDescription(it) }
         )
         Spacer(modifier = Modifier.height(22.dp))
-        UploadButton(modifier = Modifier.fillMaxWidth()) {
-            viewModel.upload(onSuccess = navigateToHome)
-        }
+        UploadButton(
+            modifier = Modifier.fillMaxWidth(),
+            enabled = isLoading.not() && textInput.text.isNotBlank(),
+            onClick = {
+                viewModel.upload(onSuccess = navigateToHome)
+            }
+        )
     }
 
     IGToast.Show(
@@ -94,6 +101,15 @@ fun UploadScreen(
         visible = visibleToast,
         onDismiss = viewModel::closeToast
     )
+
+    if (isLoading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            LoadingWheel()
+        }
+    }
 }
 
 @Composable
@@ -173,6 +189,7 @@ private fun UploadTextField(
 @Composable
 private fun UploadButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -184,15 +201,16 @@ private fun UploadButton(
             .clickable(
                 interactionSource = interactionSource,
                 indication = null,
+                enabled = enabled,
                 onClick = onClick
             )
             .scale(scale = scale)
             .background(
-                color = Color.White,
+                color = if (enabled) Color.White else Color(0xFFB0B0B0),
                 shape = RoundedCornerShape(16.dp)
             )
             .border(
-                width = 2.dp,
+                width = if (enabled) 2.dp else 0.dp,
                 brush = ButtonStrokeBrush,
                 shape = RoundedCornerShape(16.dp)
             ),
@@ -202,7 +220,7 @@ private fun UploadButton(
             modifier = Modifier.padding(vertical = 16.dp),
             style = MaterialTheme.typography.bodyMedium,
             text = "영상 업로드 하기",
-            color = Color.Black
+            color = if (enabled) Color.Black else Color.White
         )
     }
 }

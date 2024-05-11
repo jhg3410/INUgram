@@ -26,8 +26,12 @@ class UploadViewModel @Inject constructor(
     val toastType = MutableStateFlow(ToastType.SUCCESS)
     val toastMessage = MutableStateFlow("")
 
+    val isLoading = MutableStateFlow(false)
+
     fun upload(onSuccess: () -> Unit) {
         viewModelScope.launch {
+            isLoading.value = true
+
             videoRepository.upload(
                 contentUri = contentUri,
                 description = inputDescription.value.text
@@ -39,6 +43,7 @@ class UploadViewModel @Inject constructor(
                 toastType.value = ToastType.ERROR
                 toastMessage.value = it.message ?: "업로드에 실패했어요"
             }.also {
+                isLoading.value = false
                 visibleToast.value = true
             }
         }
