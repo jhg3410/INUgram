@@ -7,10 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
+import jik.inu.feature.certification.navigation.GreetingNavigation
 import jik.inu.feature.certification.navigation.GreetingNavigation.installCertificationNavGraph
 import jik.inu.feature.certification.navigation.navigateCertification
 import jik.inu.feature.certification.navigation.navigateEmail
-import jik.inu.feature.home.navigation.HomeNavigation
 import jik.inu.feature.home.navigation.HomeNavigation.installHomeScreen
 import jik.inu.feature.home.navigation.navigateHome
 import jik.inu.feature.mypage.navigation.MyPageNavigation.installMyPageNavGraph
@@ -21,7 +21,7 @@ import jik.inu.feature.upload.navigation.UploadNavigation.installUploadScreen
 fun IGNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = HomeNavigation.route,
+    startDestination: String = GreetingNavigation.route,
     changeNavigationBarTheme: (NavigationBarTheme) -> Unit
 ) {
     NavHost(
@@ -33,7 +33,12 @@ fun IGNavHost(
     ) {
         installCertificationNavGraph(
             navigateToEmail = navController::navigateEmail,
-            navigateToCertification = { navController.navigateCertification(it) },
+            navigateToCertification = { certificationNumber, email ->
+                navController.navigateCertification(
+                    certificationNumber = certificationNumber,
+                    email = email
+                )
+            },
             navigateToHome = navController::navigateHome,
             navigateUp = navController::navigateUp
         )

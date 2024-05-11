@@ -26,13 +26,13 @@ object GreetingNavigation {
 
     fun NavGraphBuilder.installCertificationNavGraph(
         navigateToEmail: () -> Unit,
-        navigateToCertification: (certificationNumber: String) -> Unit,
+        navigateToCertification: (certificationNumber: String, email: String) -> Unit,
         navigateToHome: () -> Unit,
         navigateUp: () -> Unit
     ) {
         installGreetingScreen(navigateToEmail = navigateToEmail)
-        installEmailScreen(navigateToCertification = { certificationNumber ->
-            navigateToCertification(certificationNumber)
+        installEmailScreen(navigateToCertification = { certificationNumber, email ->
+            navigateToCertification(certificationNumber, email)
         })
         installCertificationScreen(
             navigateToHome = navigateToHome,

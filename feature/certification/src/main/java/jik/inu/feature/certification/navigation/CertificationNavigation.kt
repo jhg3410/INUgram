@@ -15,18 +15,23 @@ import jik.inu.feature.certification.certification.CertificationScreen
 
 fun NavController.navigateCertification(
     certificationNumber: String,
+    email: String,
     navOptions: NavOptions? = null
 ) {
-    navigate("${CertificationNavigation.route}/$certificationNumber", navOptions)
+    navigate("${CertificationNavigation.route}/$certificationNumber/$email", navOptions)
 }
 
 object CertificationNavigation {
     const val route = "Certification"
     const val certificationNumberArg = "certificationNumber"
-    const val routeWithArgs = "$route/{$certificationNumberArg}"
+    const val emailArg = "email"
+    const val routeWithArgs = "$route/{$certificationNumberArg}/{$emailArg}"
 
     private val arguments = listOf(
         navArgument(certificationNumberArg) {
+            type = NavType.StringType
+        },
+        navArgument(emailArg) {
             type = NavType.StringType
         }
     )
@@ -49,8 +54,9 @@ object CertificationNavigation {
     }
 }
 
-internal class CertificationArgs(val certificationNumber: String) {
+internal class CertificationArgs(val certificationNumber: String, val email: String) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        certificationNumber = checkNotNull(savedStateHandle[CertificationNavigation.certificationNumberArg])
+        certificationNumber = checkNotNull(savedStateHandle[CertificationNavigation.certificationNumberArg]),
+        email = checkNotNull(savedStateHandle[CertificationNavigation.emailArg])
     )
 }

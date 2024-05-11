@@ -17,7 +17,7 @@ object EmailNavigation {
     const val route = "email"
 
     fun NavGraphBuilder.installEmailScreen(
-        navigateToCertification: (certificationNumber: String) -> Unit
+        navigateToCertification: (certificationNumber: String, email: String) -> Unit
     ) {
         composable(
             route = EmailNavigation.route,

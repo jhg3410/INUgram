@@ -32,7 +32,7 @@ import jik.inu.core.designsystem.component.textfield.IGTextField
 fun EmailScreen(
     modifier: Modifier = Modifier,
     viewModel: EmailViewModel = hiltViewModel(),
-    navigateToCertification: (certificationNumber: String) -> Unit
+    navigateToCertification: (certificationNumber: String, email: String) -> Unit
 ) {
 
     val email by viewModel.inputEmail.collectAsStateWithLifecycle()
@@ -44,7 +44,7 @@ fun EmailScreen(
 
     LaunchedEffect(key1 = certificationNumber) {
         if (certificationNumber.isNotEmpty()) {
-            navigateToCertification(certificationNumber)
+            navigateToCertification(certificationNumber, email)
             viewModel.changeCertificationNumber(number = "")
         }
     }
