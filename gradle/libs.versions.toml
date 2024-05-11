@@ -23,10 +23,12 @@ logging-interceptor = "4.12.0"
 ksp = "1.9.0-1.0.13"
 splashscreen = "1.0.1"
 media3 = "1.3.0"
+datastore = "1.1.1"
 
 androidGradlePlugin = "8.1.4"
 appcompat = "1.6.1"
 material = "1.11.0"
+firebaseCrashlyticsBuildtools = "3.0.0"
 
 [libraries]
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
@@ -86,6 +88,9 @@ retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.re
 # Logging Interceptor
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging-interceptor" }
 
+# DataStore
+datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+
 # Splash
 splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
@@ -94,6 +99,7 @@ media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", versi
 media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

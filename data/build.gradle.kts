@@ -55,6 +55,9 @@ dependencies {
     // logging
     implementation(libs.logging.interceptor)
 
+    // data store
+    implementation(libs.datastore)
+
     // hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
