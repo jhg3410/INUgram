@@ -4,5 +4,5 @@ interface CertificationRepository {
 
     suspend fun sendEmail(email: String): Result<String>
 
-    suspend fun getAccessToken(): Result<Unit>
+    suspend fun getAccessToken(email: String): Result<String>
 }

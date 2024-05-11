@@ -14,7 +14,9 @@ class CertificationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAccessToken(): Result<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun getAccessToken(email: String): Result<String> {
+        return jikCatching {
+            service.getAccessToken(EmailRequest(email = email)).accessToken
+        }
     }
 }
