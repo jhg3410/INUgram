@@ -1,6 +1,8 @@
 package jik.inu.feature.home.component
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateIntOffsetAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,11 +11,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import jik.inu.core.designsystem.icon.IGIcons
 import jik.inu.core.designsystem.theme.Blue50
@@ -60,13 +66,30 @@ fun LikeButton(
 private fun HeartEffect(
     modifier: Modifier = Modifier,
 ) {
+    var visible by remember { mutableStateOf(true) }
+
+    LaunchedEffect(key1 = Unit) {
+        visible = false
+    }
+
+    val offsetValue by animateIntOffsetAsState(
+        targetValue = if (visible) IntOffset.Zero else IntOffset(x = 0, y = -20),
+        animationSpec = tween(durationMillis = 1000),
+        label = "offsetValue"
+    )
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.BottomCenter
     ) {
         Icon(
             modifier = Modifier
-                .offset(x = (-7).dp, y = (-3).dp)
+                .offset {
+                    offsetValue.copy(
+                        x = offsetValue.x - 7.dp.roundToPx(),
+                        y = offsetValue.y - 3.dp.roundToPx()
+                    )
+                }
                 .size(size = 10.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
@@ -74,7 +97,12 @@ private fun HeartEffect(
         )
         Icon(
             modifier = Modifier
-                .offset(x = 4.dp, y = (-10).dp)
+                .offset {
+                    offsetValue.copy(
+                        x = offsetValue.x + 4.dp.roundToPx(),
+                        y = offsetValue.y - 10.dp.roundToPx()
+                    )
+                }
                 .size(size = 17.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
@@ -82,7 +110,12 @@ private fun HeartEffect(
         )
         Icon(
             modifier = Modifier
-                .offset(x = (-4).dp, y = (-27).dp)
+                .offset {
+                    offsetValue.copy(
+                        x = offsetValue.x - 4.dp.roundToPx(),
+                        y = offsetValue.y - 27.dp.roundToPx()
+                    )
+                }
                 .size(size = 12.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
