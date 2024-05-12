@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -73,58 +74,72 @@ private fun HeartEffect(
         visible = false
     }
 
-    val offsetValue by animateIntOffsetAsState(
-        targetValue = if (visible) IntOffset.Zero else IntOffset(x = 0, y = -20),
-        animationSpec = tween(durationMillis = 1000),
-        label = "offsetValue"
-    )
-    val alphaValue by animateFloatAsState(
-        targetValue = if (visible) 1.0f else 0f,
-        animationSpec = tween(durationMillis = 1000),
-        label = "alphaValue"
-    )
+    val offsetValue: @Composable (duration: Int, offsetY: Int) -> State<IntOffset> =
+        { duration, offsetY ->
+            animateIntOffsetAsState(
+                targetValue = if (visible) IntOffset.Zero else IntOffset(x = 0, y = offsetY),
+                animationSpec = tween(durationMillis = duration),
+                label = "offsetValue"
+            )
+        }
+
+    val alphaValue: @Composable (duration: Int) -> State<Float> = { duration ->
+        animateFloatAsState(
+            targetValue = if (visible) 1.0f else 0f,
+            animationSpec = tween(durationMillis = duration),
+            label = "alphaValue"
+        )
+    }
 
     Box(
         modifier = modifier,
         contentAlignment = Alignment.BottomCenter
     ) {
+        val redOffsetValue = offsetValue(1300, -20).value
+        val redAlphaValue = alphaValue(1300).value
         Icon(
             modifier = Modifier
                 .offset {
-                    offsetValue.copy(
-                        x = offsetValue.x - 7.dp.roundToPx(),
-                        y = offsetValue.y - 3.dp.roundToPx()
+                    redOffsetValue.copy(
+                        x = redOffsetValue.x - 7.dp.roundToPx(),
+                        y = redOffsetValue.y - 3.dp.roundToPx()
                     )
                 }
-                .graphicsLayer { alpha = alphaValue }
+                .graphicsLayer { alpha = redAlphaValue }
                 .size(size = 10.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
             tint = Color(0xFFED3737)
         )
+
+        val greenOffsetValue = offsetValue(1000, -18).value
+        val greenAlphaValue = alphaValue(1000).value
         Icon(
             modifier = Modifier
                 .offset {
-                    offsetValue.copy(
-                        x = offsetValue.x + 4.dp.roundToPx(),
-                        y = offsetValue.y - 10.dp.roundToPx()
+                    greenOffsetValue.copy(
+                        x = greenOffsetValue.x + 4.dp.roundToPx(),
+                        y = greenOffsetValue.y - 10.dp.roundToPx()
                     )
                 }
-                .graphicsLayer { alpha = alphaValue }
+                .graphicsLayer { alpha = greenAlphaValue }
                 .size(size = 17.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
             tint = Color(0xFF37ED6A)
         )
+
+        val yellowOffsetValue = offsetValue(700, -16).value
+        val yellowAlphaValue = alphaValue(700).value
         Icon(
             modifier = Modifier
                 .offset {
-                    offsetValue.copy(
-                        x = offsetValue.x - 4.dp.roundToPx(),
-                        y = offsetValue.y - 27.dp.roundToPx()
+                    yellowOffsetValue.copy(
+                        x = yellowOffsetValue.x - 4.dp.roundToPx(),
+                        y = yellowOffsetValue.y - 27.dp.roundToPx()
                     )
                 }
-                .graphicsLayer { alpha = alphaValue }
+                .graphicsLayer { alpha = yellowAlphaValue }
                 .size(size = 12.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
