@@ -1,6 +1,7 @@
 package jik.inu.feature.home.component
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
@@ -77,6 +78,11 @@ private fun HeartEffect(
         animationSpec = tween(durationMillis = 1000),
         label = "offsetValue"
     )
+    val alphaValue by animateFloatAsState(
+        targetValue = if (visible) 1.0f else 0f,
+        animationSpec = tween(durationMillis = 1000),
+        label = "alphaValue"
+    )
 
     Box(
         modifier = modifier,
@@ -90,6 +96,7 @@ private fun HeartEffect(
                         y = offsetValue.y - 3.dp.roundToPx()
                     )
                 }
+                .graphicsLayer { alpha = alphaValue }
                 .size(size = 10.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
@@ -103,6 +110,7 @@ private fun HeartEffect(
                         y = offsetValue.y - 10.dp.roundToPx()
                     )
                 }
+                .graphicsLayer { alpha = alphaValue }
                 .size(size = 17.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
@@ -116,6 +124,7 @@ private fun HeartEffect(
                         y = offsetValue.y - 27.dp.roundToPx()
                     )
                 }
+                .graphicsLayer { alpha = alphaValue }
                 .size(size = 12.dp),
             imageVector = IGIcons.Favorite,
             contentDescription = "Favorite",
