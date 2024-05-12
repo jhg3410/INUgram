@@ -45,7 +45,25 @@ class VideoRepositoryImpl @Inject constructor(
 
     override suspend fun getVideos(): Result<List<Video>> {
         return jikCatching {
-            videoService.getVideos(page = 0, size = 10).videos
+            videoService.getVideos(page = 0, size = 100).videos
+        }
+    }
+
+    override suspend fun getLikedVideos(): Result<Set<Int>> {
+        return jikCatching {
+            videoService.getLikedVideos(page = 0, size = 100).videos.map { it.id }.toSet()
+        }
+    }
+
+    override suspend fun like(videoId: Int): Result<Unit> {
+        return jikCatching {
+            videoService.like(videoId)
+        }
+    }
+
+    override suspend fun disLike(videoId: Int): Result<Unit> {
+        return jikCatching {
+            videoService.disLike(videoId)
         }
     }
 }

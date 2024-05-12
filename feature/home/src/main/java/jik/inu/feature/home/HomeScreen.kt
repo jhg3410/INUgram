@@ -1,6 +1,5 @@
 package jik.inu.feature.home
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,6 +44,7 @@ fun HomeScreen(
     changeNavigationBarTheme: (NavigationBarTheme) -> Unit
 ) {
     val videos by homeViewModel.videos.collectAsStateWithLifecycle()
+    val likedVideos by homeViewModel.likedVideos.collectAsStateWithLifecycle()
     var preIdx by remember { mutableIntStateOf(0) }
 
     val pagerState = rememberPagerState(pageCount = { videos.size })
@@ -72,6 +72,7 @@ fun HomeScreen(
     VerticalPager(
         modifier = modifier,
         state = pagerState,
+        key = { videos[it].id }
     ) { index ->
         if (index == preIdx) {
             Box(
@@ -82,7 +83,11 @@ fun HomeScreen(
                 SimpleVideoPlayer(contentUri = videos[index].url.toUri()) {
                     VideoThumbnail(thumbnailUrl = videos[index].thumbnail)
                 }
-                VideoInteractionOverlay(description = videos[index].description)
+                VideoInteractionOverlay(
+                    description = videos[index].description,
+                    liked = likedVideos.contains(videos[index].id),
+                    onLikeClicked = { homeViewModel.handleLike(videos[index].id) }
+                )
             }
         } else {
             VideoThumbnail(thumbnailUrl = videos[index].thumbnail)
@@ -107,6 +112,8 @@ private fun VideoThumbnail(
 @Composable
 private fun VideoInteractionOverlay(
     modifier: Modifier = Modifier,
+    liked: Boolean,
+    onLikeClicked: () -> Unit,
     description: String
 ) {
     Row(
@@ -135,11 +142,11 @@ private fun VideoInteractionOverlay(
                     modifier = Modifier
                         .size(40.dp)
                         .clickable {
-                            Log.d("HomeScreen", "Favorite Clicked")
+                            onLikeClicked()
                         },
                     imageVector = IGIcons.Favorite,
                     contentDescription = "Favorite",
-                    tint = Blue50
+                    tint = if (liked) Blue50 else Color.White
                 )
                 Text(
                     text = "좋아요",

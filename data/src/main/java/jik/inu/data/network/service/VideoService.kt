@@ -3,6 +3,7 @@ package jik.inu.data.network.service
 import jik.inu.data.network.response.GetVideosResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -24,4 +25,20 @@ interface VideoService {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): GetVideosResponse
+
+    @GET("/api/v1/get/like/videos")
+    suspend fun getLikedVideos(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): GetVideosResponse
+
+    @POST("/api/v1/insert/like")
+    suspend fun like(
+        @Body videoId: Int
+    )
+
+    @POST("/api/v1/delete/like")
+    suspend fun disLike(
+        @Body videoId: Int
+    )
 }

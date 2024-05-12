@@ -15,6 +15,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val videos = MutableStateFlow(emptyList<Video>())
+    val likedVideos = MutableStateFlow(emptySet<Int>())
 
     init {
         getVideos()
@@ -28,6 +29,28 @@ class HomeViewModel @Inject constructor(
                 }.onFailure {
                     // todo: handle error
                 }
+        }
+    }
+
+    fun handleLike(id: Int) {
+        if (likedVideos.value.contains(id)) {
+            dislikeVideo(id)
+        } else {
+            likeVideo(id)
+        }
+    }
+
+    private fun likeVideo(id: Int) {
+        likedVideos.value += id
+        viewModelScope.launch {
+            videoRepository.like(videoId = id)
+        }
+    }
+
+    private fun dislikeVideo(id: Int) {
+        likedVideos.value -= id
+        viewModelScope.launch {
+            videoRepository.disLike(videoId = id)
         }
     }
 }
