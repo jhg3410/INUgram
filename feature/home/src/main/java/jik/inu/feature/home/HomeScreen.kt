@@ -2,7 +2,6 @@ package jik.inu.feature.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,7 +32,7 @@ import coil.compose.AsyncImage
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.core.designsystem.icon.IGIcons
-import jik.inu.core.designsystem.theme.Blue50
+import jik.inu.feature.home.component.LikeButton
 import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -138,15 +137,9 @@ private fun VideoInteractionOverlay(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clickable {
-                            onLikeClicked()
-                        },
-                    imageVector = IGIcons.Favorite,
-                    contentDescription = "Favorite",
-                    tint = if (liked) Blue50 else Color.White
+                LikeButton(
+                    liked = liked,
+                    onClick = onLikeClicked
                 )
                 Text(
                     text = "좋아요",
