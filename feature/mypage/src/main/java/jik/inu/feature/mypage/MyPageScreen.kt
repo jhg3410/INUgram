@@ -57,16 +57,17 @@ fun MyPageScreen(
 
     if (showShorts.visible) {
         changeNavigationBarTheme(NavigationBarTheme.Dark)
-        val videos = if (selectedTabIndex == 0) {
-            likedVideos.map { it.toShortsVideo() }
-        } else {
-            myVideos.map { it.toShortsVideo() }
-        }
+        val videos = if (selectedTabIndex == 0) likedVideos else myVideos
         Shorts(
             modifier = Modifier.fillMaxSize(),
-            playList = videos,
+            playList = videos.map { it.toShortsVideo() },
             initialVideoPage = videos.indexOfFirst { it.id == showShorts.onClickVideoId },
-            onLikeClicked = {}
+            likedVideoIds = likedVideos.map { it.id },
+            onLikeClicked = { id ->
+                videos.find { video -> video.id == id }?.let {
+                    myPageViewModel.handleLike(it)
+                }
+            }
         )
     } else {
         changeNavigationBarTheme(NavigationBarTheme.Light)

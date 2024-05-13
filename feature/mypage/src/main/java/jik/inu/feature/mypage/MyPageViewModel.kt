@@ -68,4 +68,26 @@ class MyPageViewModel @Inject constructor(
                 }
         }
     }
+
+    fun handleLike(video: Video) {
+        if (likedVideos.value.contains(video)) {
+            dislikeVideo(video)
+        } else {
+            likeVideo(video)
+        }
+    }
+
+    private fun likeVideo(video: Video) {
+        likedVideos.value += video
+        viewModelScope.launch {
+            videoRepository.like(videoId = video.id)
+        }
+    }
+
+    private fun dislikeVideo(video: Video) {
+        likedVideos.value -= video
+        viewModelScope.launch {
+            videoRepository.disLike(videoId = video.id)
+        }
+    }
 }

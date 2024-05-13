@@ -24,7 +24,7 @@ fun Shorts(
     modifier: Modifier = Modifier,
     playList: List<ShortsVideo>,
     initialVideoPage: Int = 0,
-    likedVideoIds: List<Int> = playList.map { it.id },
+    likedVideoIds: List<Int>,
     onLikeClicked: (id: Int) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
