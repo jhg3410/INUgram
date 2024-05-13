@@ -44,6 +44,7 @@ dependencies {
     implementation(projects.data)
     implementation(projects.core.model)
     implementation(projects.core.designsystem)
+    implementation(projects.lib.videoplayer)
 
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.runtime.ktx)

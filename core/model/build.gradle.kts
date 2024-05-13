@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.lib.videoplayer)
 
     // moshi
     implementation(libs.moshi)
