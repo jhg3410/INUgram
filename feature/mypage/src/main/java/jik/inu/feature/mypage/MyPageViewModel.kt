@@ -4,13 +4,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jik.inu.core.model.Video
 import jik.inu.data.repository.user.UserRepository
+import jik.inu.data.repository.video.VideoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
+    private val videoRepository: VideoRepository,
     private val userRepository: UserRepository
 ) : ViewModel() {
 
@@ -19,8 +22,17 @@ class MyPageViewModel @Inject constructor(
     val email = MutableStateFlow("")
     val profileColor = MutableStateFlow(Color.Transparent)
 
+    val likedVideos = MutableStateFlow(emptyList<Video>())
+    val myVideos = MutableStateFlow(emptyList<Video>())
+
     init {
         getMyInfo()
+        getLikedVideos()
+        getMyVideos()
+    }
+
+    fun onSelectedTabChanged(index: Int) {
+        selectedTabIndex.value = index
     }
 
     private fun getMyInfo() {
@@ -35,7 +47,25 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun onSelectedTabChanged(index: Int) {
-        selectedTabIndex.value = index
+    private fun getLikedVideos() {
+        viewModelScope.launch {
+            videoRepository.getLikedVideos()
+                .onSuccess {
+                    likedVideos.value = it
+                }.onFailure {
+                    // TODO: Handle error
+                }
+        }
+    }
+
+    private fun getMyVideos() {
+        viewModelScope.launch {
+            videoRepository.getMyVideos()
+                .onSuccess {
+                    myVideos.value = it
+                }.onFailure {
+                    // TODO: Handle error
+                }
+        }
     }
 }

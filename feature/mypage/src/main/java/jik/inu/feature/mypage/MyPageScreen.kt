@@ -36,6 +36,9 @@ fun MyPageScreen(
     val email by myPageViewModel.email.collectAsStateWithLifecycle()
     val profileColor by myPageViewModel.profileColor.collectAsStateWithLifecycle()
 
+    val likedVideos by myPageViewModel.likedVideos.collectAsStateWithLifecycle()
+    val myVideos by myPageViewModel.myVideos.collectAsStateWithLifecycle()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -68,7 +71,10 @@ fun MyPageScreen(
                 myPageViewModel.onSelectedTabChanged(it)
             }
         )
-        MyVideosScreen(modifier = Modifier.weight(1f))
+        MyVideosScreen(
+            modifier = Modifier.weight(1f),
+            videos = if (selectedTabIndex == 0) likedVideos else myVideos
+        )
     }
 }
 
