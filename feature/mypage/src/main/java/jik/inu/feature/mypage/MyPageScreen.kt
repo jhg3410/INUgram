@@ -1,5 +1,6 @@
 package jik.inu.feature.mypage
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,6 +50,10 @@ fun MyPageScreen(
     )
 
     var showShorts by remember { mutableStateOf(VisibilityShorts()) }
+
+    BackHandler(enabled = showShorts.visible) {
+        showShorts = showShorts.copy(visible = false)
+    }
 
     if (showShorts.visible) {
         changeNavigationBarTheme(NavigationBarTheme.Dark)
