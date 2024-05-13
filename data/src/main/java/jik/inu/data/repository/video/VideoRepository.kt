@@ -9,7 +9,9 @@ interface VideoRepository {
 
     suspend fun getVideos(): Result<List<Video>>
 
-    suspend fun getLikedVideos(): Result<Set<Int>>
+    suspend fun getLikedVideos(): Result<List<Video>>
+
+    suspend fun getMyVideos(): Result<List<Video>>
 
     suspend fun like(videoId: Int): Result<Unit>
 

@@ -15,7 +15,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val videos = MutableStateFlow(emptyList<Video>())
-    val likedVideos = MutableStateFlow(emptySet<Int>())
+    val likedVideos = MutableStateFlow(emptyList<Int>())
 
     init {
         getVideos()
@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             videoRepository.getLikedVideos()
                 .onSuccess {
-                    likedVideos.value = it
+                    likedVideos.value = it.map { video -> video.id }
                 }.onFailure {
                     // todo: handle error
                 }

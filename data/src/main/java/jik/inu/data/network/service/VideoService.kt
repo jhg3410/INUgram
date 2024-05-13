@@ -33,6 +33,12 @@ interface VideoService {
         @Query("size") size: Int
     ): GetVideosResponse
 
+    @GET("/api/v1/find/video/myself")
+    suspend fun getMyVideos(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): GetVideosResponse
+
     @POST("/api/v1/insert/like")
     suspend fun like(
         @Body videoId: Int

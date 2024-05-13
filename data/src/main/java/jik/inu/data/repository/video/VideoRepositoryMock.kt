@@ -35,7 +35,11 @@ class VideoRepositoryMock @Inject constructor(
         )
     }
 
-    override suspend fun getLikedVideos(): Result<Set<Int>> {
+    override suspend fun getLikedVideos(): Result<List<Video>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getMyVideos(): Result<List<Video>> {
         TODO("Not yet implemented")
     }
 
