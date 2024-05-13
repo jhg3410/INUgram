@@ -19,6 +19,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         getVideos()
+        getLikedVideos()
     }
 
     private fun getVideos() {
@@ -26,6 +27,17 @@ class HomeViewModel @Inject constructor(
             videoRepository.getVideos()
                 .onSuccess {
                     videos.value = it
+                }.onFailure {
+                    // todo: handle error
+                }
+        }
+    }
+
+    private fun getLikedVideos() {
+        viewModelScope.launch {
+            videoRepository.getLikedVideos()
+                .onSuccess {
+                    likedVideos.value = it
                 }.onFailure {
                     // todo: handle error
                 }
