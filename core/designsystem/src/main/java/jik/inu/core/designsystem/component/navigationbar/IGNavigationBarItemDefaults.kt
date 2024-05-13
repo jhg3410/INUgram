@@ -38,12 +38,15 @@ internal object IGNavigationBarItemDefaults {
 }
 
 enum class NavigationBarTheme(
-    val backgroundColor: Color
+    val backgroundColor: Color,
+    val borderColor: Color
 ) {
     Light(
-        backgroundColor = Color.White
+        backgroundColor = Color.White,
+        borderColor = Color.Black.copy(alpha = 0.2f)
     ),
     Dark(
-        backgroundColor = Color.Black
+        backgroundColor = Color.Black,
+        borderColor = Color(0xFF343434)
     )
 }

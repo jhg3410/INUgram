@@ -22,7 +22,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -51,7 +53,16 @@ fun IGNavigationBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .windowInsetsPadding(NavigationBarDefaults.windowInsets)
-                .selectableGroup(),
+                .selectableGroup()
+                .drawBehind {
+                    val strokeWidth = 1.dp.toPx()
+                    drawLine(
+                        color = theme.borderColor,
+                        strokeWidth = strokeWidth,
+                        start = Offset(x = 0f, y = 0f + strokeWidth / 2),
+                        end = Offset(x = size.width, y = 0f + strokeWidth / 2)
+                    )
+                },
             content = content
         )
     }
