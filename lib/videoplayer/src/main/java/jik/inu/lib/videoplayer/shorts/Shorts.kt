@@ -23,14 +23,17 @@ import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 fun Shorts(
     modifier: Modifier = Modifier,
     playList: List<ShortsVideo>,
-    startVideoId: Int = 0,
+    initialVideoPage: Int = 0,
     likedVideoIds: List<Int> = playList.map { it.id },
     onLikeClicked: (id: Int) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
     var preIdx by remember { mutableIntStateOf(0) }
 
-    val pagerState = rememberPagerState(pageCount = { playList.size })
+    val pagerState = rememberPagerState(
+        initialPage = initialVideoPage,
+        pageCount = { playList.size }
+    )
     if (pagerState.currentPageOffsetFraction == 0f) {
         preIdx = pagerState.currentPage
     }

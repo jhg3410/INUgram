@@ -46,7 +46,7 @@ fun MyPageScreen(
 
     data class VisibilityShorts(
         val visible: Boolean = false,
-        val startVideoId: Int = 0
+        val onClickVideoId: Int = 0
     )
 
     var showShorts by remember { mutableStateOf(VisibilityShorts()) }
@@ -57,14 +57,15 @@ fun MyPageScreen(
 
     if (showShorts.visible) {
         changeNavigationBarTheme(NavigationBarTheme.Dark)
+        val videos = if (selectedTabIndex == 0) {
+            likedVideos.map { it.toShortsVideo() }
+        } else {
+            myVideos.map { it.toShortsVideo() }
+        }
         Shorts(
             modifier = Modifier.fillMaxSize(),
-            playList = if (selectedTabIndex == 0) {
-                likedVideos.map { it.toShortsVideo() }
-            } else {
-                myVideos.map { it.toShortsVideo() }
-            },
-            startVideoId = showShorts.startVideoId,
+            playList = videos,
+            initialVideoPage = videos.indexOfFirst { it.id == showShorts.onClickVideoId },
             onLikeClicked = {}
         )
     } else {
@@ -107,7 +108,7 @@ fun MyPageScreen(
                 onVideoCardClick = { videoId ->
                     showShorts = showShorts.copy(
                         visible = true,
-                        startVideoId = videoId
+                        onClickVideoId = videoId
                     )
                 }
             )
