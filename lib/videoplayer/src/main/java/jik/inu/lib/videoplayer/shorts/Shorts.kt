@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -14,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.net.toUri
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -25,6 +27,7 @@ fun Shorts(
     likedVideoIds: List<Int> = playList.map { it.id },
     onLikeClicked: (id: Int) -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
     var preIdx by remember { mutableIntStateOf(0) }
 
     val pagerState = rememberPagerState(pageCount = { playList.size })
@@ -32,6 +35,19 @@ fun Shorts(
         preIdx = pagerState.currentPage
     }
 
+    DisposableEffect(key1 = Unit) {
+        systemUiController.setStatusBarColor(
+            color = Color.Transparent,
+            darkIcons = false
+        )
+
+        onDispose {
+            systemUiController.setStatusBarColor(
+                color = Color.Transparent,
+                darkIcons = true
+            )
+        }
+    }
 
     VerticalPager(
         modifier = modifier,

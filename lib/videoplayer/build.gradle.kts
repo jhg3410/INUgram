@@ -52,6 +52,9 @@ dependencies {
     // coil
     implementation(libs.compose.coil)
 
+    // systemUiController
+    implementation(libs.accompanist.systemuicontroller)
+
     // lifecycle
     implementation(libs.lifecycle.runtime)
 
