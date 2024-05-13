@@ -44,11 +44,8 @@ class IGAppState(
 
     fun navigateFromBottomBar(topLevelDestination: TopLevelDestination) {
         val navOptions = navOptions {
-            popUpTo(navController.graph.startDestinationId) {
-                saveState = true
-            }
+            popUpTo(id = navController.graph.startDestinationId)
             launchSingleTop = true
-            restoreState = true
         }
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateHome(navOptions)
