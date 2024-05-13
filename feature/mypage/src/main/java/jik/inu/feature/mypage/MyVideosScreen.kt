@@ -1,6 +1,7 @@
 package jik.inu.feature.mypage
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -22,7 +23,8 @@ import jik.inu.core.model.Video
 @Composable
 fun MyVideosScreen(
     modifier: Modifier = Modifier,
-    videos: List<Video>
+    videos: List<Video>,
+    onVideoCardClick: (videoId: Int) -> Unit
 ) {
 
     LazyVerticalGrid(
@@ -35,7 +37,8 @@ fun MyVideosScreen(
             MyVideoCard(
                 modifier = Modifier.aspectRatio(118 / 220f),
                 thumbnailUrl = video.thumbnail,
-                description = video.description
+                description = video.description,
+                onClick = { onVideoCardClick(video.id) }
             )
         }
     }
@@ -46,10 +49,13 @@ fun MyVideosScreen(
 private fun MyVideoCard(
     modifier: Modifier = Modifier,
     thumbnailUrl: String,
-    description: String
+    description: String,
+    onClick: () -> Unit
 ) {
     Box(
-        modifier = modifier.background(color = Color.Black),
+        modifier = modifier
+            .background(color = Color.Black)
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         AsyncImage(

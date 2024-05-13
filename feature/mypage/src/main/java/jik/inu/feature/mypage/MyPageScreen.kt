@@ -15,6 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
 import jik.inu.feature.mypage.tab.MyPageTabRow
+import jik.inu.lib.videoplayer.shorts.Shorts
 
 @Composable
 fun MyPageScreen(
@@ -39,42 +43,70 @@ fun MyPageScreen(
     val likedVideos by myPageViewModel.likedVideos.collectAsStateWithLifecycle()
     val myVideos by myPageViewModel.myVideos.collectAsStateWithLifecycle()
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+    data class VisibilityShorts(
+        val visible: Boolean = false,
+        val startVideoId: Int = 0
+    )
+
+    var showShorts by remember { mutableStateOf(VisibilityShorts()) }
+
+    if (showShorts.visible) {
+        changeNavigationBarTheme(NavigationBarTheme.Dark)
+        Shorts(
+            modifier = Modifier.fillMaxSize(),
+            playList = if (selectedTabIndex == 0) {
+                likedVideos.map { it.toShortsVideo() }
+            } else {
+                myVideos.map { it.toShortsVideo() }
+            },
+            startVideoId = showShorts.startVideoId,
+            onLikeClicked = {}
+        )
+    } else {
+        changeNavigationBarTheme(NavigationBarTheme.Light)
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            profileColor.copy(0.5f),
-                            profileColor.copy(0.2f),
-                            Color.White
-                        )
-                    )
-                ),
+            modifier = modifier
+                .fillMaxSize()
+                .background(color = Color.White),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.statusBarsPadding())
-            Spacer(modifier = Modifier.height(40.dp))
-            MyInfo(profileColor = profileColor, email = email)
-            Spacer(modifier = Modifier.height(40.dp))
-        }
-        MyPageTabRow(
-            tabs = myPageViewModel.tabs,
-            selectedTabIndex = selectedTabIndex,
-            onChangeSelectedTabIndex = {
-                myPageViewModel.onSelectedTabChanged(it)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                profileColor.copy(0.5f),
+                                profileColor.copy(0.2f),
+                                Color.White
+                            )
+                        )
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Spacer(modifier = Modifier.statusBarsPadding())
+                Spacer(modifier = Modifier.height(40.dp))
+                MyInfo(profileColor = profileColor, email = email)
+                Spacer(modifier = Modifier.height(40.dp))
             }
-        )
-        MyVideosScreen(
-            modifier = Modifier.weight(1f),
-            videos = if (selectedTabIndex == 0) likedVideos else myVideos
-        )
+            MyPageTabRow(
+                tabs = myPageViewModel.tabs,
+                selectedTabIndex = selectedTabIndex,
+                onChangeSelectedTabIndex = {
+                    myPageViewModel.onSelectedTabChanged(it)
+                }
+            )
+            MyVideosScreen(
+                modifier = Modifier.weight(1f),
+                videos = if (selectedTabIndex == 0) likedVideos else myVideos,
+                onVideoCardClick = { videoId ->
+                    showShorts = showShorts.copy(
+                        visible = true,
+                        startVideoId = videoId
+                    )
+                }
+            )
+        }
     }
 }
 
