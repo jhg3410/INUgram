@@ -49,6 +49,9 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons)
 
+    // coil
+    implementation(libs.compose.coil)
+
     // lifecycle
     implementation(libs.lifecycle.runtime)
 

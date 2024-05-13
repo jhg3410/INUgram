@@ -1,4 +1,4 @@
-package jik.inu.feature.home.component
+package jik.inu.lib.videoplayer.shorts.component
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -21,16 +24,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import jik.inu.core.designsystem.icon.IGIcons
-import jik.inu.core.designsystem.theme.Blue50
 
 @Composable
 fun LikeButton(
     modifier: Modifier = Modifier,
     liked: Boolean,
-    onClick: () -> Unit
+    likeImageVector: ImageVector = Icons.Filled.Favorite,
+    likeTint: Color = MaterialTheme.colorScheme.primary,
+    onClick: () -> Unit,
 ) {
 
     val scaleAnimation = remember { Animatable(0f) }
@@ -46,7 +50,7 @@ fun LikeButton(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (liked) HeartEffect()
+        if (liked) HeartEffect(likeImageVector = likeImageVector)
         Icon(
             modifier = Modifier
                 .size(40.dp)
@@ -57,9 +61,9 @@ fun LikeButton(
                     scaleX = if (liked.not()) 1f else scaleAnimation.value
                     scaleY = if (liked.not()) 1f else scaleAnimation.value
                 },
-            imageVector = IGIcons.Favorite,
+            imageVector = likeImageVector,
             contentDescription = "Favorite",
-            tint = if (liked) Blue50 else Color.White
+            tint = if (liked) likeTint else Color.White
         )
     }
 }
@@ -67,6 +71,7 @@ fun LikeButton(
 @Composable
 private fun HeartEffect(
     modifier: Modifier = Modifier,
+    likeImageVector: ImageVector,
 ) {
     var visible by remember { mutableStateOf(true) }
 
@@ -107,7 +112,7 @@ private fun HeartEffect(
                 }
                 .graphicsLayer { alpha = redAlphaValue }
                 .size(size = 10.dp),
-            imageVector = IGIcons.Favorite,
+            imageVector = likeImageVector,
             contentDescription = "Favorite",
             tint = Color(0xFFED3737)
         )
@@ -124,7 +129,7 @@ private fun HeartEffect(
                 }
                 .graphicsLayer { alpha = greenAlphaValue }
                 .size(size = 17.dp),
-            imageVector = IGIcons.Favorite,
+            imageVector = likeImageVector,
             contentDescription = "Favorite",
             tint = Color(0xFF37ED6A)
         )
@@ -141,7 +146,7 @@ private fun HeartEffect(
                 }
                 .graphicsLayer { alpha = yellowAlphaValue }
                 .size(size = 12.dp),
-            imageVector = IGIcons.Favorite,
+            imageVector = likeImageVector,
             contentDescription = "Favorite",
             tint = Color(0xFFE9ED37)
         )
