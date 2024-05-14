@@ -38,9 +38,10 @@ fun LikeButton(
 ) {
 
     val scaleAnimation = remember { Animatable(0f) }
+    var isClicked by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = liked) {
-        if (liked) {
+        if (liked && isClicked) {
             scaleAnimation.animateTo(targetValue = 1.4f)
             scaleAnimation.animateTo(targetValue = 1f)
         }
@@ -50,16 +51,17 @@ fun LikeButton(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (liked) HeartEffect(likeImageVector = likeImageVector)
+        if (liked && isClicked) HeartEffect(likeImageVector = likeImageVector)
         Icon(
             modifier = Modifier
                 .size(40.dp)
                 .clickable {
                     onClick()
+                    isClicked = true
                 }
                 .graphicsLayer {
-                    scaleX = if (liked.not()) 1f else scaleAnimation.value
-                    scaleY = if (liked.not()) 1f else scaleAnimation.value
+                    scaleX = if (liked.not() || isClicked.not()) 1f else scaleAnimation.value
+                    scaleY = if (liked.not() || isClicked.not()) 1f else scaleAnimation.value
                 },
             imageVector = likeImageVector,
             contentDescription = "Favorite",
