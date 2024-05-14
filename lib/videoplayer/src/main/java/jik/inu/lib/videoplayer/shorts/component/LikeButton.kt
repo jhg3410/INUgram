@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.offset
@@ -55,10 +56,14 @@ fun LikeButton(
         Icon(
             modifier = Modifier
                 .size(40.dp)
-                .clickable {
-                    onClick()
-                    isClicked = true
-                }
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {
+                        onClick()
+                        isClicked = true
+                    }
+                )
                 .graphicsLayer {
                     scaleX = if (liked.not() || isClicked.not()) 1f else scaleAnimation.value
                     scaleY = if (liked.not() || isClicked.not()) 1f else scaleAnimation.value
