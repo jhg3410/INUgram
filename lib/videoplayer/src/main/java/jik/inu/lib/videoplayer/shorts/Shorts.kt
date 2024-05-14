@@ -25,7 +25,8 @@ fun Shorts(
     playList: List<ShortsVideo>,
     initialVideoPage: Int = 0,
     likedVideoIds: List<Int>,
-    onLikeClicked: (id: Int) -> Unit
+    onLikeClicked: (id: Int) -> Unit,
+    onShareClicked: (id: Int) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
     var preIdx by remember { mutableIntStateOf(0) }
@@ -69,7 +70,8 @@ fun Shorts(
                 ShortsOverlay(
                     description = playList[index].description,
                     liked = likedVideoIds.contains(playList[index].id),
-                    onLikeClicked = { onLikeClicked(playList[index].id) }
+                    onLikeClicked = { onLikeClicked(playList[index].id) },
+                    onShareClicked = { onShareClicked(playList[index].id) }
                 )
             }
         } else {

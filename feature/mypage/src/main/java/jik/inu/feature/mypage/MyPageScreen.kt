@@ -24,10 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
+import jik.inu.core.ui.share.videoShareIntent
 import jik.inu.feature.mypage.tab.MyPageTabRow
 import jik.inu.lib.videoplayer.shorts.Shorts
 
@@ -37,6 +39,7 @@ fun MyPageScreen(
     myPageViewModel: MyPageViewModel = hiltViewModel(),
     changeNavigationBarTheme: (NavigationBarTheme) -> Unit
 ) {
+    val context = LocalContext.current
     val selectedTabIndex by myPageViewModel.selectedTabIndex.collectAsStateWithLifecycle()
     val email by myPageViewModel.email.collectAsStateWithLifecycle()
     val profileColor by myPageViewModel.profileColor.collectAsStateWithLifecycle()
@@ -66,6 +69,17 @@ fun MyPageScreen(
             onLikeClicked = { id ->
                 videos.find { video -> video.id == id }?.let {
                     myPageViewModel.handleLike(it)
+                }
+            },
+            onShareClicked = { id ->
+                videos.find { video -> video.id == id }?.let { video ->
+                    context.startActivity(
+                        videoShareIntent(
+                            video.thumbnail,
+                            video.url,
+                            video.description
+                        )
+                    )
                 }
             }
         )
