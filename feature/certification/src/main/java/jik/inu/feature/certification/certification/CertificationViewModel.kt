@@ -19,11 +19,10 @@ class CertificationViewModel @Inject constructor(
     private val email = CertificationArgs(savedStateHandle).email
     private val certificationNumber = CertificationArgs(savedStateHandle).certificationNumber
     val inputNumber = MutableStateFlow("")
-    var visibleToast = MutableStateFlow(false)
 
-    fun certify(action: () -> Unit) {
+    fun certify(action: () -> Unit, onFailure: (message: String) -> Unit) {
         if (inputNumber.value != certificationNumber) {
-            visibleToast.value = true
+            onFailure("인증번호를 다시 확인해 주세요")
             return
         } else {
             viewModelScope.launch {
@@ -47,9 +46,5 @@ class CertificationViewModel @Inject constructor(
                 inputNumber.value = this
             }
         }
-    }
-
-    fun closeToast() {
-        visibleToast.value = false
     }
 }

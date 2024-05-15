@@ -44,7 +44,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.R
 import jik.inu.core.designsystem.component.LoadingWheel
-import jik.inu.core.designsystem.component.toast.IGToast
+import jik.inu.core.designsystem.component.toast.LocalToastController
+import jik.inu.core.designsystem.component.toast.ToastType
 import jik.inu.feature.upload.UploadButtonDefaults.ButtonStrokeBrush
 import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 
@@ -56,10 +57,8 @@ fun UploadScreen(
 ) {
     val textInput by viewModel.inputDescription.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
+    val igToastController = LocalToastController.current
 
-    val visibleToast by viewModel.visibleToast.collectAsStateWithLifecycle()
-    val toastType by viewModel.toastType.collectAsStateWithLifecycle()
-    val toastMessage by viewModel.toastMessage.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
     Column(
@@ -92,17 +91,25 @@ fun UploadScreen(
             modifier = Modifier.fillMaxWidth(),
             enabled = isLoading.not() && textInput.text.isNotBlank(),
             onClick = {
-                viewModel.upload(onSuccess = navigateToHome)
+                viewModel.upload(
+                    onSuccess = { message ->
+                        navigateToHome()
+                        igToastController.show(
+                            message = message,
+                            type = ToastType.SUCCESS
+                        )
+                    },
+                    onFailure = { message ->
+                        igToastController.show(
+                            message = message,
+                            type = ToastType.ERROR,
+                            bottomPadding = 60.dp
+                        )
+                    }
+                )
             }
         )
     }
-
-    IGToast.Show(
-        message = toastMessage,
-        type = toastType,
-        visible = visibleToast,
-        onDismiss = viewModel::closeToast
-    )
 
     if (isLoading) {
         Box(

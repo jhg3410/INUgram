@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.button.IGButton
-import jik.inu.core.designsystem.component.toast.IGToast
+import jik.inu.core.designsystem.component.toast.LocalToastController
 import jik.inu.core.designsystem.component.toast.ToastType
 
 
@@ -51,7 +51,7 @@ fun CertificationScreen(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val inputNumber by viewModel.inputNumber.collectAsStateWithLifecycle()
-    val visibleToast by viewModel.visibleToast.collectAsStateWithLifecycle()
+    val igToastController = LocalToastController.current
 
     LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
@@ -88,21 +88,22 @@ fun CertificationScreen(
             modifier = Modifier.fillMaxWidth(),
             text = "인증하기",
             onClick = {
-                viewModel.certify(action = {
-                    focusManager.clearFocus()
-                    navigateToHome()
-                })
+                viewModel.certify(
+                    action = {
+                        focusManager.clearFocus()
+                        navigateToHome()
+                    },
+                    onFailure = { message ->
+                        igToastController.show(
+                            message = message,
+                            type = ToastType.WARNING
+                        )
+                    }
+                )
             },
             enable = inputNumber.length == 5
         )
     }
-
-    IGToast.Show(
-        message = "인증번호를 다시 확인해 주세요",
-        type = ToastType.WARNING,
-        visible = visibleToast,
-        onDismiss = viewModel::closeToast
-    )
 }
 
 @Composable
