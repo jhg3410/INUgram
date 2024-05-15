@@ -11,12 +11,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationBar
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationBarItem
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationButton
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
+import jik.inu.core.designsystem.component.toast.IGToast
+import jik.inu.core.designsystem.component.toast.LocalToastController
+import jik.inu.core.designsystem.component.toast.ToastController
+import jik.inu.core.designsystem.component.toast.ToastState
 import jik.inu.core.designsystem.theme.INUgramTheme
 import jik.inu.feature.upload.navigation.navigateUpload
 import jik.inu.inugram.navigation.IGNavHost
@@ -28,6 +34,7 @@ import java.nio.charset.StandardCharsets
 fun IGApp() {
     val appState = rememberIGAppState()
     val currentTopLevelDestinationOrNull = appState.currentTopLevelDestinationOrNull
+    val toastState = remember { ToastState() }
 
     INUgramTheme {
         Scaffold(
@@ -47,15 +54,20 @@ fun IGApp() {
                     }
                 )
             },
+            snackbarHost = { IGToast(toastState = toastState) },
             contentWindowInsets = WindowInsets(0.dp)
         ) {
-            IGNavHost(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it),
-                navController = appState.navController,
-                changeNavigationBarTheme = appState::changeNavigationBarTheme
-            )
+            CompositionLocalProvider(
+                LocalToastController provides ToastController(toastState)
+            ) {
+                IGNavHost(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it),
+                    navController = appState.navController,
+                    changeNavigationBarTheme = appState::changeNavigationBarTheme
+                )
+            }
         }
     }
 }

@@ -18,90 +18,87 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AddCircle
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Error
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jik.inu.core.designsystem.theme.SpoqaHanSansNeo
 import kotlinx.coroutines.delay
 
 
-object IGToast {
-    @Composable
-    fun Show(
-        modifier: Modifier = Modifier,
+val LocalToastController = staticCompositionLocalOf {
+    ToastController(ToastState())
+}
+
+class ToastController(
+    private val toastState: ToastState
+) {
+    fun show(
         message: String,
         type: ToastType,
-        duration: Long = 2000L,
-        visible: Boolean,
-        onDismiss: () -> Unit
+        bottomPadding: Dp = Dp.Hairline
     ) {
-        if (visible) {
-            LaunchedEffect(key1 = Unit) {
-                delay(duration)
-                onDismiss()
-            }
-        }
-
-        IGToast(
-            modifier = modifier,
-            type = type,
+        toastState.show(
             message = message,
-            visible = visible
+            type = type,
+            bottomPadding = bottomPadding
         )
     }
 }
 
+class ToastState {
 
-enum class ToastType(
-    val icon: ImageVector,
-    val iconColor: Color,
-    val strokeColor: Color,
-    val backgroundColor: Color,
-    val contentDescription: String = this.toString()
-) {
-    SUCCESS(
-        icon = Icons.Rounded.CheckCircle,
-        iconColor = Color(0xFF00B800),
-        strokeColor = Color(0xFF78D361),
-        backgroundColor = Color(0xFFFEFFFE),
-    ),
-    ERROR(
-        icon = Icons.Rounded.AddCircle,
-        iconColor = Color(0xFFFF0000),
-        strokeColor = Color(0xFFFF8181),
-        backgroundColor = Color(0xFFFFFEFE)
-    ),
-    WARNING(
-        icon = Icons.Rounded.Error,
-        iconColor = Color(0xFFFFA800),
-        strokeColor = Color(0xFFFFC581),
-        backgroundColor = Color(0xFFFFFFFE)
-    )
+    val duration = 2000L
+    var message: String by mutableStateOf("")
+    var type: ToastType by mutableStateOf(ToastType.SUCCESS)
+    var visible: Boolean by mutableStateOf(false)
+    var bottomPadding by mutableStateOf(Dp.Hairline)
+
+    internal fun show(
+        message: String,
+        type: ToastType,
+        bottomPadding: Dp
+    ) {
+        this.message = message
+        this.type = type
+        this.visible = true
+        this.bottomPadding = bottomPadding
+    }
 }
 
 
 @Composable
 fun IGToast(
-    modifier: Modifier,
-    type: ToastType,
-    message: String,
-    visible: Boolean
+    modifier: Modifier = Modifier,
+    toastState: ToastState,
+    message: String = toastState.message,
+    type: ToastType = toastState.type,
+    duration: Long = toastState.duration,
+    visible: Boolean = toastState.visible,
+    bottomPadding: Dp = toastState.bottomPadding
 ) {
+    LaunchedEffect(key1 = visible) {
+        if (visible) {
+            delay(duration)
+            toastState.visible = false
+        }
+    }
+
     AnimatedVisibility(
         modifier = modifier
             .imePadding()
@@ -133,7 +130,7 @@ fun IGToast(
                 .padding(
                     start = 48.dp,
                     end = 48.dp,
-                    bottom = 82.dp
+                    bottom = 20.dp + bottomPadding
                 ),
             contentAlignment = Alignment.BottomCenter
         ) {
@@ -182,10 +179,19 @@ fun IGToast(
 @Preview
 @Composable
 fun PreviewIGToast() {
-    IGToast(
-        modifier = Modifier,
-        type = ToastType.SUCCESS,
-        message = "토스트 메시지",
-        visible = true
-    )
+    val toastState = remember { ToastState() }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Button(onClick = { toastState.show("hihihi", ToastType.WARNING, Dp.Hairline) }) {
+            Text("Show Toast")
+        }
+
+        IGToast(
+            modifier = Modifier,
+            toastState = toastState,
+        )
+    }
 }
