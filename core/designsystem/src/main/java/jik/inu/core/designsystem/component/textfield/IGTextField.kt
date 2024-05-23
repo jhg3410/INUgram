@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,19 +18,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import jik.inu.core.designsystem.component.textfield.visualtransformation.EmailVisualTransformation
-import jik.inu.core.ui.toPx
 import jik.inu.core.designsystem.component.textfield.IGTextFieldDefaults.dividerActiveColor
 import jik.inu.core.designsystem.component.textfield.IGTextFieldDefaults.dividerDefaultColor
 import jik.inu.core.designsystem.component.textfield.IGTextFieldDefaults.textActiveColor
 import jik.inu.core.designsystem.component.textfield.IGTextFieldDefaults.textDefaultColor
-import jik.inu.inugram.designsystem.component.textfield.IGTextFieldType
+import jik.inu.core.designsystem.component.textfield.visualtransformation.EmailVisualTransformation
+import jik.inu.core.ui.toPx
 
 @Composable
 fun IGTextField(
@@ -57,7 +59,9 @@ fun IGTextField(
                 innerTextField = innerTextField,
                 type = type
             )
-        }
+        },
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.onBackground),
+        textStyle = TextStyle.Default.copy(color = MaterialTheme.colorScheme.onBackground)
     )
 }
 

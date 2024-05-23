@@ -1,4 +1,4 @@
-package jik.inu.inugram.designsystem.component.textfield
+package jik.inu.core.designsystem.component.textfield
 
 
 
