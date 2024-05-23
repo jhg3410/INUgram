@@ -64,7 +64,10 @@ fun Shorts(
                     .fillMaxSize()
                     .background(color = Color.Black)
             ) {
-                SimpleVideoPlayer(contentUri = playList[index].videoUrl.toUri()) {
+                SimpleVideoPlayer(
+                    contentUri = playList[index].videoUrl.toUri(),
+                    isAutoReplay = true
+                ) {
                     ShortsThumbnail(thumbnailUrl = playList[index].thumbnailUrl)
                 }
                 ShortsOverlay(
