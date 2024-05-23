@@ -61,7 +61,7 @@ fun CertificationScreen(
         modifier = modifier
             .statusBarsPadding()
             .imePadding()
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colorScheme.background)
             .pointerInput(key1 = Unit) {
                 detectTapGestures(onTap = { focusManager.clearFocus() })
             }
@@ -71,6 +71,7 @@ fun CertificationScreen(
             modifier = Modifier.padding(horizontal = 18.dp),
             text = "인증 번호를 보냈어요\nINU 이메일을 확인해주세요",
             style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.height(44.dp))
         CertificationNumberField(
