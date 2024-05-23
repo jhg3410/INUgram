@@ -17,13 +17,17 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
+    primary = Blue50,
+    background = Color.White,
+    onBackground = Color.Black,
     secondary = PurpleGrey80,
     tertiary = Pink80
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = Blue50,
+    background = BlueBlack,
+    onBackground = Color.White,
     secondary = PurpleGrey40,
     tertiary = Pink40
 
@@ -65,9 +69,7 @@ fun INUgramTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme.copy(
-            primary = Blue50
-        ),
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )
