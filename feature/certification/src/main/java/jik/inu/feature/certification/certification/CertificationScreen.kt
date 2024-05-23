@@ -96,7 +96,8 @@ fun CertificationScreen(
                     onFailure = { message ->
                         igToastController.show(
                             message = message,
-                            type = ToastType.WARNING
+                            type = ToastType.WARNING,
+                            bottomPadding = 62.dp
                         )
                     }
                 )
