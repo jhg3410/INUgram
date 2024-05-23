@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.delay
 
 @Composable
@@ -37,12 +36,12 @@ fun GreetingScreen(
         enter = slideInVertically(animationSpec = tween(durationMillis = 1000)) { it },
     ) {
         Box(
-            modifier = modifier.background(color = Color.White),
+            modifier = modifier.background(color = MaterialTheme.colorScheme.background),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "INUgram 을 사용하려면\n인천대 학생을 인증해야 해요",
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleLarge
             )
         }

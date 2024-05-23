@@ -18,7 +18,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
@@ -53,7 +52,7 @@ fun EmailScreen(
         modifier = modifier
             .statusBarsPadding()
             .imePadding()
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colorScheme.background)
             .pointerInput(key1 = Unit) {
                 detectTapGestures(onTap = { focusManager.clearFocus() })
             }
@@ -62,6 +61,7 @@ fun EmailScreen(
         Text(
             modifier = Modifier.padding(horizontal = 18.dp),
             text = "인증 번호를 받으실\nINU 이메일을 입력해주세요",
+            color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.titleLarge,
         )
         Spacer(modifier = Modifier.height(44.dp))
