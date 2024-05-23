@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -68,7 +69,7 @@ fun UploadScreen(
             .pointerInput(key1 = Unit) {
                 detectTapGestures(onTap = { focusManager.clearFocus() })
             }
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(horizontal = 30.dp),
         verticalArrangement = Arrangement.Center
     ) {
@@ -176,7 +177,7 @@ private fun UploadTextField(
                         shape = RoundedCornerShape(8.dp)
                     )
                     .background(
-                        color = Color.White,
+                        color = if (isSystemInDarkTheme().not()) Color.White else Color(0xFF222531),
                         shape = RoundedCornerShape(8.dp)
                     )
                     .padding(8.dp)
