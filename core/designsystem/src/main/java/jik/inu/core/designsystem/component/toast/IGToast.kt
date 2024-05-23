@@ -1,5 +1,6 @@
 package jik.inu.core.designsystem.component.toast
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.spring
@@ -8,6 +9,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -38,6 +40,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jik.inu.core.designsystem.theme.SpoqaHanSansNeo
+import jik.inu.core.ui.conditional
 import kotlinx.coroutines.delay
 
 
@@ -92,6 +95,8 @@ fun IGToast(
     visible: Boolean = toastState.visible,
     bottomPadding: Dp = toastState.bottomPadding
 ) {
+    val isDarkTheme = isSystemInDarkTheme()
+
     LaunchedEffect(key1 = visible) {
         if (visible) {
             delay(duration)
@@ -138,14 +143,16 @@ fun IGToast(
                 modifier = modifier
                     .offset(x = if (type == ToastType.ERROR) shake.value.dp else 0.dp)
                     .background(
-                        color = type.backgroundColor,
+                        color = if (isDarkTheme.not()) type.backgroundColor else Color(0xFF445267),
                         shape = RoundedCornerShape(100.dp)
                     )
-                    .border(
-                        width = 1.5.dp,
-                        color = type.strokeColor,
-                        shape = RoundedCornerShape(100.dp)
-                    )
+                    .conditional(condition = isDarkTheme.not()) {
+                        border(
+                            width = 1.5.dp,
+                            color = type.strokeColor,
+                            shape = RoundedCornerShape(100.dp)
+                        )
+                    }
                     .padding(
                         top = 8.dp,
                         bottom = 8.dp,
@@ -168,7 +175,7 @@ fun IGToast(
                     fontSize = 14.sp,
                     fontFamily = SpoqaHanSansNeo,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0xFF414141)
+                    color = if (isDarkTheme.not()) Color(0xFF414141) else Color(0xFFF2F2F2)
                 )
             }
         }
@@ -176,7 +183,7 @@ fun IGToast(
 }
 
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewIGToast() {
     val toastState = remember { ToastState() }
