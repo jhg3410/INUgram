@@ -88,7 +88,7 @@ fun MyPageScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .background(color = Color.White),
+                .background(color = MaterialTheme.colorScheme.background),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(
@@ -99,7 +99,7 @@ fun MyPageScreen(
                             colors = listOf(
                                 profileColor.copy(0.5f),
                                 profileColor.copy(0.2f),
-                                Color.White
+                                MaterialTheme.colorScheme.background
                             )
                         )
                     ),
