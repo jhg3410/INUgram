@@ -1,5 +1,6 @@
 package jik.inu.feature.mypage.tab
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -10,7 +11,6 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -24,7 +24,7 @@ internal fun MyPageTabRow(
     TabRow(
         modifier = modifier,
         selectedTabIndex = selectedTabIndex,
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.background,
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
                 Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
@@ -40,8 +40,8 @@ internal fun MyPageTabRow(
             Tab(
                 selected = selected,
                 onClick = { onChangeSelectedTabIndex(index) },
-                selectedContentColor = TabType.Selected.contentColor,
-                unselectedContentColor = TabType.UnSelected.contentColor,
+                selectedContentColor = TabType.Selected.contentColor(),
+                unselectedContentColor = TabType.UnSelected.contentColor(),
             ) {
                 Text(
                     modifier = Modifier.padding(vertical = 8.dp),
@@ -54,7 +54,7 @@ internal fun MyPageTabRow(
 }
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun TabRowPreview() {
     MyPageTabRow(
