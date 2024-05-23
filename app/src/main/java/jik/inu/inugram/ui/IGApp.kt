@@ -6,13 +6,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationBar
@@ -91,6 +94,14 @@ fun IGBottomBar(
         }
     }
 
+    val navTheme by
+    rememberUpdatedState(
+        newValue = if (theme == NavigationBarTheme.Dark || isSystemInDarkTheme())
+            NavigationBarTheme.Dark
+        else
+            NavigationBarTheme.Light
+    )
+
 
     AnimatedVisibility(
         visible = visible,
@@ -99,7 +110,7 @@ fun IGBottomBar(
     ) {
         IGNavigationBar(
             modifier = modifier,
-            theme = theme,
+            theme = navTheme,
             content = {
                 topLevelDestination.forEachIndexed { index, destination ->
                     val selected = destination.route == currentTopLevelDestination?.route
@@ -112,7 +123,7 @@ fun IGBottomBar(
                     }
                     IGNavigationBarItem(
                         selected = selected,
-                        theme = theme,
+                        theme = navTheme,
                         onClick = { onNavigateToDestination(destination) },
                         iconImageVector = destination.icon,
                         selectedIconImageVector = destination.icon,

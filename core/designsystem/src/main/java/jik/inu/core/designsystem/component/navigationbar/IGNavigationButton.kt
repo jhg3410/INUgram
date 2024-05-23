@@ -59,6 +59,7 @@ fun RowScope.IGNavigationButton(
                 .size(24.dp),
             imageVector = IGIcons.AddRounded,
             contentDescription = "Add Video",
+            tint = Color.Black
         )
     }
 }
