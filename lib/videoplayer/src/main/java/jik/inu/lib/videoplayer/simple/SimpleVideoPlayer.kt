@@ -37,8 +37,9 @@ fun SimpleVideoPlayer(
     thumbnail: (@Composable () -> Unit)? = null
 ) {
     val context = LocalContext.current
+    var player: ExoPlayer? by remember { mutableStateOf(null) }
     var controllerVisible by remember { mutableStateOf(false) }
-    var playerState by remember { mutableStateOf(PlayerState.PLAYING) }
+    var playerState by remember { mutableStateOf(PlayerState.LOADING) }
     var controllerSymbol by remember { mutableStateOf<@Composable () -> Unit>({}) }
     var tapCount by remember { mutableLongStateOf(0L) }
     var thumbnailVisible by remember { mutableStateOf(true) }
@@ -50,8 +51,8 @@ fun SimpleVideoPlayer(
         )
     }
 
-    val player = remember {
-        ExoPlayer.Builder(context).build().apply {
+    fun initializePlayer() {
+        player = ExoPlayer.Builder(context).build().apply {
             repeatMode = if (isAutoReplay) ExoPlayer.REPEAT_MODE_ONE else ExoPlayer.REPEAT_MODE_OFF
             addListener(stateChangedListener)
             setMediaItem(MediaItem.fromUri(contentUri))
@@ -61,8 +62,11 @@ fun SimpleVideoPlayer(
     }
 
     fun releasePlayer() {
-        player.removeListener(stateChangedListener)
-        player.release()
+        player?.let {
+            it.removeListener(stateChangedListener)
+            it.release()
+        }
+        player = null
     }
 
     LaunchedEffect(key1 = playerState) {
@@ -90,6 +94,8 @@ fun SimpleVideoPlayer(
     }
 
     LifecycleStartEffect {
+        initializePlayer()
+
         onStopOrDispose {
             releasePlayer()
         }
@@ -121,22 +127,24 @@ fun SimpleVideoPlayer(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        VideoPlayerScreen(
-            player = player,
-            onScreenClick = {
-                if (player.isPlaying) {
-                    player.pause()
-                } else if (
-                    playerState == PlayerState.ENDED
-                ) {
-                    player.seekTo(0)
-                } else {
-                    player.play()
+        player?.let { player ->
+            VideoPlayerScreen(
+                player = player,
+                onScreenClick = {
+                    if (player.isPlaying) {
+                        player.pause()
+                    } else if (
+                        playerState == PlayerState.ENDED
+                    ) {
+                        player.seekTo(0)
+                    } else {
+                        player.play()
+                    }
+                    tapCount += 1
+                    controllerVisible = true
                 }
-                tapCount += 1
-                controllerVisible = true
-            }
-        )
+            )
+        }
         SimpleVideoPlayerController(
             visible = controllerVisible,
             controllerSymbol = controllerSymbol
