@@ -34,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -47,7 +46,7 @@ import jik.inu.core.designsystem.R
 import jik.inu.core.designsystem.component.LoadingWheel
 import jik.inu.core.designsystem.component.toast.LocalToastController
 import jik.inu.core.designsystem.component.toast.ToastType
-import jik.inu.feature.upload.UploadButtonDefaults.ButtonStrokeBrush
+import jik.inu.core.designsystem.theme.BlueBlack
 import jik.inu.lib.videoplayer.simple.SimpleVideoPlayer
 
 @Composable
@@ -205,6 +204,17 @@ private fun UploadButton(
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val scale by animateFloatAsState(targetValue = if (isPressed) 0.95f else 1f, label = "upload")
+    val buttonBackgroundColor =
+        if (enabled.not()) {
+            Color(0xFFB0B0B0)
+        } else if (
+            isSystemInDarkTheme()
+        ) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            BlueBlack
+        }
+
 
     Box(
         modifier = modifier
@@ -216,12 +226,7 @@ private fun UploadButton(
             )
             .scale(scale = scale)
             .background(
-                color = if (enabled) Color.White else Color(0xFFB0B0B0),
-                shape = RoundedCornerShape(16.dp)
-            )
-            .border(
-                width = if (enabled) 2.dp else 0.dp,
-                brush = ButtonStrokeBrush,
+                color = buttonBackgroundColor,
                 shape = RoundedCornerShape(16.dp)
             ),
         contentAlignment = Alignment.Center
@@ -230,19 +235,7 @@ private fun UploadButton(
             modifier = Modifier.padding(vertical = 16.dp),
             style = MaterialTheme.typography.bodyMedium,
             text = "영상 업로드 하기",
-            color = if (enabled) Color.Black else Color.White
+            color = Color.White
         )
     }
-}
-
-
-private object UploadButtonDefaults {
-    val red = Color(0xFFED3737)
-    val yellow = Color(0xFFFAFF00)
-    val skyBlue = Color(0xFF5EBBFF)
-
-    val ButtonStrokeBrush
-        @Composable get() = Brush.horizontalGradient(
-            listOf(red, yellow, skyBlue)
-        )
 }
