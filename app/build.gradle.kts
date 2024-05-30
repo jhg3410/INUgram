@@ -55,6 +55,7 @@ android {
 dependencies {
     // modules
     implementation(projects.core.designsystem)
+    implementation(projects.data)
     implementation(projects.feature.certification)
     implementation(projects.feature.home)
     implementation(projects.feature.upload)
@@ -71,8 +72,13 @@ dependencies {
     implementation(libs.compose.tooling)
     implementation(libs.compose.preview)
 
+    // lifecycle
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.runtime)
+
     // hilt
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation)
     kapt(libs.hilt.compiler)
 
     // splash

@@ -18,6 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationBar
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationBarItem
 import jik.inu.core.designsystem.component.navigationbar.IGNavigationButton
@@ -34,10 +36,13 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 @Composable
-fun IGApp() {
+fun IGApp(
+    viewModel: IGAppViewModel = hiltViewModel()
+) {
     val appState = rememberIGAppState()
     val currentTopLevelDestinationOrNull = appState.currentTopLevelDestinationOrNull
     val toastState = remember { ToastState() }
+    val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
 
     INUgramTheme {
         Scaffold(
@@ -68,6 +73,7 @@ fun IGApp() {
                         .fillMaxSize()
                         .padding(it),
                     navController = appState.navController,
+                    startDestination = startDestination,
                     changeNavigationBarTheme = appState::changeNavigationBarTheme
                 )
             }
