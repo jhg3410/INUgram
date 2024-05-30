@@ -2,10 +2,13 @@ package jik.inu.feature.mypage
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
+import jik.inu.core.designsystem.icon.IGIcons
 import jik.inu.core.designsystem.theme.BlueBlack
 import jik.inu.core.designsystem.theme.Gray10
 import jik.inu.core.ui.share.videoShareIntent
@@ -110,7 +115,7 @@ fun MyPageScreen(
             ) {
                 Spacer(modifier = Modifier.statusBarsPadding())
                 Spacer(modifier = Modifier.height(40.dp))
-                MyInfo(profileColor = profileColor, email = email)
+                MyInfo(profileColor = profileColor, email = email, logout = myPageViewModel::logout)
                 Spacer(modifier = Modifier.height(40.dp))
             }
             MyPageTabRow(
@@ -135,7 +140,11 @@ fun MyPageScreen(
 }
 
 @Composable
-private fun MyInfo(profileColor: Color, email: String) {
+private fun MyInfo(
+    profileColor: Color,
+    email: String,
+    logout: () -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -154,10 +163,26 @@ private fun MyInfo(profileColor: Color, email: String) {
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = email,
-            color = if (isSystemInDarkTheme().not()) BlueBlack else Gray10,
-            style = MaterialTheme.typography.bodySmall
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = email,
+                color = if (isSystemInDarkTheme().not()) BlueBlack else Gray10,
+                style = MaterialTheme.typography.bodySmall
+            )
+            Icon(
+                modifier = Modifier
+                    .size(size = 16.dp)
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() },
+                        onClick = logout
+                    ),
+                imageVector = IGIcons.Logout,
+                tint = if (isSystemInDarkTheme().not()) BlueBlack else Gray10,
+                contentDescription = "logout",
+            )
+        }
     }
 }

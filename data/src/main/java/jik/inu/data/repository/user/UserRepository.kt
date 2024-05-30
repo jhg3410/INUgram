@@ -5,4 +5,6 @@ import jik.inu.core.model.User
 interface UserRepository {
 
     suspend fun getMyInfo(): Result<User>
+
+    suspend fun logout()
 }

@@ -26,4 +26,10 @@ class CertificationPreferencesDataSource @Inject constructor(
             preferences[Key.ACCESS_TOKEN] = accessToken
         }
     }
+
+    suspend fun deleteAccessToken() {
+        certificationPreferences.edit { preferences ->
+            preferences.remove(Key.ACCESS_TOKEN)
+        }
+    }
 }

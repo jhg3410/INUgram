@@ -35,6 +35,12 @@ class MyPageViewModel @Inject constructor(
         selectedTabIndex.value = index
     }
 
+    fun logout() {
+        viewModelScope.launch {
+            userRepository.logout()
+        }
+    }
+
     private fun getMyInfo() {
         viewModelScope.launch {
             userRepository.getMyInfo()
