@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -127,6 +128,8 @@ fun DescriptionField(
     input: TextFieldValue,
     onInputChange: (TextFieldValue) -> Unit
 ) {
+    val isDarkTheme = isSystemInDarkTheme()
+
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -138,13 +141,13 @@ fun DescriptionField(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = R.drawable.ic_comment),
                 contentDescription = "input Description",
-                tint = Color(0xFF161719)
+                tint = if (isDarkTheme.not()) Color(0xFF161719) else Color(0xFFF0F0F0)
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "설명 추가하기",
                 style = MaterialTheme.typography.labelSmall,
-                color = Color(0xFF161719)
+                color = if (isDarkTheme.not()) Color(0xFF161719) else Color(0xFFF0F0F0)
             )
         }
         UploadTextField(
@@ -160,11 +163,19 @@ private fun UploadTextField(
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
 ) {
+
+    val isDarkTheme = isSystemInDarkTheme()
+    val contentLightColor = Color(0xFF161719)
+    val contentDarkColor = Color(0xFFF0F0F0)
+    val contentColor = if (isDarkTheme.not()) contentLightColor else contentDarkColor
+
     BasicTextField(
         modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.bodyMedium,
+        textStyle = MaterialTheme.typography.bodyMedium.copy(
+            color = contentColor
+        ),
         singleLine = false,
         minLines = 4,
         decorationBox = { innerTextField ->
@@ -185,12 +196,13 @@ private fun UploadTextField(
                     Text(
                         text = "설명을 입력해주세요",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Color(0xFFB0B0B0)
+                        color = contentColor
                     )
                 }
                 innerTextField()
             }
-        }
+        },
+        cursorBrush = SolidColor(contentColor)
     )
 }
 
