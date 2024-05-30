@@ -3,6 +3,7 @@ package jik.inu.feature.certification.certification
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -159,7 +160,7 @@ private fun CertificationNumberFieldContainer(
                 if (isFocused) {
                     border(
                         width = 1.dp,
-                        color = Color(0xFFFF8300),
+                        color = if (isSystemInDarkTheme().not()) Color.Black else Color.Transparent,
                         shape = RoundedCornerShape(4.dp)
                     )
                 } else {
