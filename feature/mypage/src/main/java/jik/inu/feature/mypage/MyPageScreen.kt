@@ -2,6 +2,7 @@ package jik.inu.feature.mypage
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jik.inu.core.designsystem.component.navigationbar.NavigationBarTheme
+import jik.inu.core.designsystem.theme.BlueBlack
+import jik.inu.core.designsystem.theme.Gray10
 import jik.inu.core.ui.share.videoShareIntent
 import jik.inu.feature.mypage.tab.MyPageTabRow
 import jik.inu.lib.videoplayer.shorts.Shorts
@@ -153,7 +156,7 @@ private fun MyInfo(profileColor: Color, email: String) {
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = email,
-            color = Color.Black,
+            color = if (isSystemInDarkTheme().not()) BlueBlack else Gray10,
             style = MaterialTheme.typography.bodySmall
         )
     }

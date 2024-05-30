@@ -4,6 +4,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import jik.inu.core.designsystem.theme.Blue50
+import jik.inu.core.designsystem.theme.BlueBlack
+import jik.inu.core.designsystem.theme.Gray10
 
 internal enum class TabType(
     val contentColor: @Composable () -> Color,
@@ -11,8 +13,8 @@ internal enum class TabType(
 ) {
     Selected(
         contentColor = @Composable {
-            if (isSystemInDarkTheme()) Color.White
-            else Color.Black
+            if (isSystemInDarkTheme()) Gray10
+            else BlueBlack
         },
         indicatorColor = Blue50
     ),
