@@ -2,6 +2,7 @@ package jik.inu.lib.videoplayer.shorts
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.VerticalPager
@@ -29,6 +30,7 @@ fun Shorts(
     onShareClicked: (id: Int) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
+    val isDarkTheme = isSystemInDarkTheme()
     var preIdx by remember { mutableIntStateOf(0) }
 
     val pagerState = rememberPagerState(
@@ -46,10 +48,12 @@ fun Shorts(
         )
 
         onDispose {
-            systemUiController.setStatusBarColor(
-                color = Color.Transparent,
-                darkIcons = true
-            )
+            if (isDarkTheme.not()) {
+                systemUiController.setStatusBarColor(
+                    color = Color.Transparent,
+                    darkIcons = true
+                )
+            }
         }
     }
 
