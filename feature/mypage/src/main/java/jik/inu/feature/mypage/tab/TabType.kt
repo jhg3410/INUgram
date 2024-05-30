@@ -11,8 +11,8 @@ internal enum class TabType(
 ) {
     Selected(
         contentColor = @Composable {
-            if (isSystemInDarkTheme()) Color.Black
-            else Color.White
+            if (isSystemInDarkTheme()) Color.White
+            else Color.Black
         },
         indicatorColor = Blue50
     ),
